@@ -42,6 +42,7 @@ public class FloatingBiped : MovementProvider
     [Header("Character Movement Variables")]
     [SerializeField] private float playerAcceleration;
     [SerializeField] private float maxSpeed;
+    [SerializeField] private float airMovementInfluence = 0.2f;
     [SerializeField] private float maxAccelerationForce;
     [SerializeField] private float decelerationCoefficient = 0.3f;
     [SerializeField] private float frictionCoefficient = 0.98f;
@@ -76,8 +77,8 @@ public class FloatingBiped : MovementProvider
     
     // Smoothly apply resistance between these angles                
     float resistStartAngle = 20f; // begin resisting                 
-    float resistFullAngle  = 40f; // completely block uphill motion  
-    float uphillResistance = 2f;  // scaling factor    
+    float resistFullAngle  = 55; // completely block uphill motion  
+    float uphillResistance = 1.3f;  // scaling factor    
     
     [SerializeField] private bool isGrounded = false;
     [SerializeField] private bool canStand = false;
@@ -181,18 +182,24 @@ public class FloatingBiped : MovementProvider
 
         //Jump checks later
         isGrounded = hitInfo.hit;
+        
+        bool jumpGracePeriod = Time.time - jumpTime < 0.15f;
 
         if (canStand == false)
         {
             return;
         }
         
-        if (hitInfo.hit)
+        if (hitInfo.hit && !jumpGracePeriod)
         {
             jumpNormal = Vector3.Slerp(Vector3.up, groundNormal, jumpGroundNormalInfluence).normalized;
             //Used to calculate if the user can jump
-            lastGroundedTime=Time.time;
-            
+
+            if (!isJumping)
+            {
+                lastGroundedTime = Time.time;
+            }
+
             //Velocity comparisons for managing spring force
             Vector3 velocity= rig.linearVelocity;
 
@@ -229,7 +236,7 @@ public class FloatingBiped : MovementProvider
             float springForce = (x*rideSpringStrength) - (relVel*rideDampnerForce);
 
             //Float player
-            if (!isJumping && !jumpPressed)
+            if (!isJumping && !jumpPressed && (Time.time - jumpTime > 0.1f))
             {
                 rig.AddForce(springForce*gripRatio*rayDir);
 
@@ -307,8 +314,12 @@ public class FloatingBiped : MovementProvider
                     jumpTime = Time.time;
                     isJumping=true;
                     rig.linearVelocity = new Vector3(rig.linearVelocity.x, 0, rig.linearVelocity.z);
-                    rig.AddForce(jumpNormal * jumpForce*1.3f, ForceMode.Impulse);
+                    rig.AddForce(jumpNormal * jumpForce*1.3f, ForceMode.VelocityChange);
 
+                    if (hitObject != null)
+                    {
+                        hitObject.AddForce(-jumpNormal * jumpForce*1.3f, ForceMode.VelocityChange);
+                    }
                 }
             }
         }
@@ -358,7 +369,7 @@ public class FloatingBiped : MovementProvider
 
         if (!isGrounded)
         {
-            airTimeModifier = 0.4f;
+            airTimeModifier = airMovementInfluence;
         }
         
         //Add ground velocity to player
@@ -366,7 +377,7 @@ public class FloatingBiped : MovementProvider
         {
 
             //fixed delta time before
-            rig.AddForce(rig.linearVelocity * Time.fixedDeltaTime, ForceMode.Impulse);
+            //rig.AddForce(hitObject.linearVelocity * Time.fixedDeltaTime, ForceMode.Impulse);
         }
 
         Vector3 neededAccel = Vector3.zero;
@@ -484,11 +495,11 @@ public class FloatingBiped : MovementProvider
     private Vector2 playerInputs;
     private void FixedUpdate()
     {
+        ManageJump(); 
         ManageGroundHugForce();
-        ManageFriction();
         ManageSpring();
+        ManageFriction();
         ManageMovement();
-        ManageJump();
     }
 
     public override void LookAtVector(Vector3 lookDir)
