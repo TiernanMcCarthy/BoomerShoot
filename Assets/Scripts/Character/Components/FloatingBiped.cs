@@ -72,7 +72,6 @@ public class FloatingBiped : MovementProvider
     [SerializeField] private float rideHeight;
     [SerializeField] private float rideSpringStrength;
     [SerializeField] private float rideDampnerForce;
-    
     [SerializeField] private AnimationCurve slopeGripFactor;
     
     // Smoothly apply resistance between these angles                
