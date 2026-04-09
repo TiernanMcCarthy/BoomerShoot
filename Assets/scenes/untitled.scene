@@ -96,7 +96,7 @@
       "Flags": 0,
       "Name": "Cube",
       "Position": "-485.5349,-572.102,208.8388",
-      "Rotation": "0.000000007923012,0,0,1",
+      "Rotation": "0,0,0,1",
       "Scale": "1,1,2",
       "Tags": "",
       "Enabled": true,
@@ -132,151 +132,6 @@
           },
           "RenderType": "On",
           "Tint": "1,1,1,1"
-        },
-        {
-          "__type": "FloatingBiped",
-          "__guid": "7679c02e-f1ff-418b-90c1-a5483355b3b6",
-          "__enabled": true,
-          "Flags": 0,
-          "accelerationFromDot": {
-            "rangex": "-1,1",
-            "rangey": "0.4999999,1",
-            "frames": [
-              {
-                "x": 0,
-                "y": 1,
-                "in": 0,
-                "out": 0,
-                "mode": "Mirrored"
-              },
-              {
-                "x": 0.6643522,
-                "y": 0.3168908,
-                "in": 1.2434775,
-                "out": -1.2434775,
-                "mode": "Mirrored"
-              },
-              {
-                "x": 0.7685319,
-                "y": 0.15008639,
-                "in": 1.8153203,
-                "out": -1.8153203,
-                "mode": "Mirrored"
-              },
-              {
-                "x": 1,
-                "y": 0,
-                "in": 0,
-                "out": 0,
-                "mode": "Mirrored"
-              }
-            ]
-          },
-          "airMovementInfluence": 0.2,
-          "canJump": true,
-          "canStand": false,
-          "coyoteTime": 0.2,
-          "debugShow": 0,
-          "decelerationCoefficient": 0.05,
-          "frictionCoefficient": 0.96,
-          "groundHugForce": 0.19,
-          "isGrounded": false,
-          "jumpForce": 5,
-          "jumpGroundNormalInfluence": 0.5,
-          "jumpInterval": 0.3,
-          "jumpLength": 0.2,
-          "maxAccelerationForce": 150,
-          "maxAccelerationFromDot": {
-            "rangex": "-1,1",
-            "rangey": "0.4,1",
-            "frames": [
-              {
-                "x": 0,
-                "y": 1,
-                "in": 0,
-                "out": 0,
-                "mode": "Mirrored"
-              },
-              {
-                "x": 0.6643522,
-                "y": 0.3168908,
-                "in": 1.2434775,
-                "out": -1.2434775,
-                "mode": "Mirrored"
-              },
-              {
-                "x": 0.7685319,
-                "y": 0.15008639,
-                "in": 1.8153203,
-                "out": -1.8153203,
-                "mode": "Mirrored"
-              },
-              {
-                "x": 1,
-                "y": 0,
-                "in": 0,
-                "out": 0,
-                "mode": "Mirrored"
-              }
-            ]
-          },
-          "maxJumpTime": 0.3,
-          "maxSpeed": 5,
-          "OnComponentDestroy": null,
-          "OnComponentDisabled": null,
-          "OnComponentEnabled": null,
-          "OnComponentFixedUpdate": null,
-          "OnComponentStart": null,
-          "OnComponentUpdate": null,
-          "playerAcceleration": 5,
-          "playerAccelerationCurve": {
-            "rangey": "0.35,0.95",
-            "frames": [
-              {
-                "x": 0,
-                "y": 0,
-                "in": 0,
-                "out": 0,
-                "mode": "Mirrored"
-              },
-              {
-                "x": 1,
-                "y": 1,
-                "in": 0,
-                "out": 0,
-                "mode": "Mirrored"
-              }
-            ]
-          },
-          "raycastPoint": {
-            "_type": "gameobject",
-            "go": "4619b07a-5e3c-4098-9824-9af3ec440030"
-          },
-          "rideDampnerForce": 9009,
-          "rideHeight": 16.4,
-          "rideOffset": 0,
-          "rideSpringStrength": 90904.99,
-          "slopeGripFactor": {
-            "rangex": "-0.00000005960464,4.207024",
-            "rangey": "0.2603354,1",
-            "frames": [
-              {
-                "x": 0,
-                "y": 1,
-                "in": 0,
-                "out": 0,
-                "mode": "Mirrored"
-              },
-              {
-                "x": 1,
-                "y": 0,
-                "in": -1.7484555E-07,
-                "out": 1.7484555E-07,
-                "mode": "Mirrored"
-              }
-            ]
-          },
-          "terminalJumpVelocity": 22.5
         },
         {
           "__type": "Sandbox.Rigidbody",
@@ -337,6 +192,151 @@
           "Static": false,
           "Surface": null,
           "SurfaceVelocity": "0,0,0"
+        },
+        {
+          "__type": "FloatingBiped",
+          "__guid": "0124c324-8060-4be2-953e-6a8f51781c6f",
+          "__enabled": true,
+          "Flags": 0,
+          "accelerationFromDot": {
+            "rangex": "-1,1",
+            "rangey": "0.4999999,1",
+            "frames": [
+              {
+                "x": 0,
+                "y": 1,
+                "in": 0,
+                "out": 0,
+                "mode": "Mirrored"
+              },
+              {
+                "x": 0.6643522,
+                "y": 0.3168908,
+                "in": 1.2434775,
+                "out": -1.2434775,
+                "mode": "Mirrored"
+              },
+              {
+                "x": 0.7685319,
+                "y": 0.15008639,
+                "in": 1.8153203,
+                "out": -1.8153203,
+                "mode": "Mirrored"
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "in": 0,
+                "out": 0,
+                "mode": "Mirrored"
+              }
+            ]
+          },
+          "airMovementInfluence": 0.2,
+          "canJump": true,
+          "canStand": false,
+          "coyoteTime": 0.2,
+          "debugShow": 0,
+          "decelerationCoefficient": 0.05,
+          "frictionCoefficient": 0.96,
+          "groundHugForce": 0.19,
+          "isGrounded": false,
+          "jumpForce": 5,
+          "jumpGroundNormalInfluence": 0.5,
+          "jumpInterval": 0.3,
+          "jumpLength": 0.2,
+          "maxAccelerationForce": 2187.8486,
+          "maxAccelerationFromDot": {
+            "rangex": "-1,1",
+            "rangey": "0.4,1",
+            "frames": [
+              {
+                "x": 0,
+                "y": 1,
+                "in": 0,
+                "out": 0,
+                "mode": "Mirrored"
+              },
+              {
+                "x": 0.6643522,
+                "y": 0.3168908,
+                "in": 1.2434775,
+                "out": -1.2434775,
+                "mode": "Mirrored"
+              },
+              {
+                "x": 0.7685319,
+                "y": 0.15008639,
+                "in": 1.8153203,
+                "out": -1.8153203,
+                "mode": "Mirrored"
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "in": 0,
+                "out": 0,
+                "mode": "Mirrored"
+              }
+            ]
+          },
+          "maxJumpTime": 0.3,
+          "maxSpeed": 50000000,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
+          "playerAcceleration": 5000000,
+          "playerAccelerationCurve": {
+            "rangey": "0.35,0.95",
+            "frames": [
+              {
+                "x": 0,
+                "y": 0,
+                "in": 0,
+                "out": 0,
+                "mode": "Mirrored"
+              },
+              {
+                "x": 1,
+                "y": 1,
+                "in": 0,
+                "out": 0,
+                "mode": "Mirrored"
+              }
+            ]
+          },
+          "raycastPoint": {
+            "_type": "gameobject",
+            "go": "4619b07a-5e3c-4098-9824-9af3ec440030"
+          },
+          "rideDampnerForce": 9009,
+          "rideHeight": 16.4,
+          "rideOffset": 0,
+          "rideSpringStrength": 90904.99,
+          "slopeGripFactor": {
+            "rangex": "-0.00000005960464,4.207024",
+            "rangey": "0.2603354,1",
+            "frames": [
+              {
+                "x": 0,
+                "y": 1,
+                "in": 0,
+                "out": 0,
+                "mode": "Mirrored"
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "in": -1.7484555E-07,
+                "out": 1.7484555E-07,
+                "mode": "Mirrored"
+              }
+            ]
+          },
+          "terminalJumpVelocity": 22.5
         }
       ],
       "Children": [
@@ -489,7 +489,7 @@
     "GameObjectSystems": {
       "Sandbox.Clutter.ClutterGridSystem": {
         "Storage": {
-          "$blob": "bd2ea6ff-bd43-4d8d-8dd4-760d89b51269"
+          "$blob": "6fa83177-c5be-443f-9b66-83a00d751d78"
         }
       },
       "Sandbox.MovieMaker.MovieRecorderSystem": {

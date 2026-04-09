@@ -32,7 +32,21 @@ class HitInformation
     }
 }
 
+public static class Vector3Extensions
+{
+    public static Vector3 MoveTowards(this Vector3 current, Vector3 target, float maxDistanceDelta)
+    {
+        Vector3 delta = target - current;
+        float magnitude = delta.Length;
 
+        if (magnitude <= maxDistanceDelta || magnitude == 0f)
+        {
+            return target;
+        }
+
+        return current + delta / magnitude * maxDistanceDelta;
+    }
+}
 public sealed class FloatingBiped : MovementProvider
 {
 	
@@ -184,6 +198,11 @@ public sealed class FloatingBiped : MovementProvider
         rig.Velocity= new Vector3(rig.Velocity.x,rig.Velocity.y,zVelocity);
     }
 
+
+    float resistStartAngle;
+    float resistFullAngle;
+
+    float uphillResistance=1;
 	/// <summary>
 	/// Player is held up by a spring from the ground, strength will define how
 	/// well they can step over objects e.t.c
@@ -342,72 +361,83 @@ public sealed class FloatingBiped : MovementProvider
         float tempAcceleration = playerAcceleration;
 
 		//CHANGE FOR A CLAMP01 equivalent next
-        tempAcceleration*=Math.Clamp(playerAccelerationCurve.Evaluate(rig.Velocity.Length/maxSpeed)*2);
+        tempAcceleration*=Math.Clamp(playerAccelerationCurve.Evaluate(rig.Velocity.Length/maxSpeed)*2,0,1);
+
 
 
         float accel = tempAcceleration * accelDot;
         
         
+
+        
         accel *= airTimeModifier;
         
         float maxAccel = maxAccelerationForce * maxAccelDot;
+
+
         
         //Calculate goal velocity for our player
-        float targetSpeed = maxSpeed * Math.Clamp01(playerInputs.Length);
+        float targetSpeed = maxSpeed * Math.Clamp(playerInputs.Length,0,1);
+        
+
         
         
 
         Vector3 goalVel = m_UnitGoal * targetSpeed;
-        m_GoalVel = Vector3.MoveTowards(m_GoalVel, goalVel, accel * Time.fixedDeltaTime);
-        
+
+        m_GoalVel = m_GoalVel.MoveTowards(goalVel, accel * Time.Delta);
+
         // 2. Handle Idle / No Input
-        if (playerInputs.magnitude == 0)
+        if (playerInputs.Length == 0)
         {
             // On ground, we slow down to a halt
             if (isGrounded)
             {
-                m_GoalVel = Vector3.MoveTowards(m_GoalVel, Vector3.zero, playerAcceleration *decelerationCoefficient* Time.fixedDeltaTime);
-                neededAccel = (m_GoalVel - rig.linearVelocity) / Time.fixedDeltaTime;
-                
-                neededAccel = Vector3.ClampMagnitude(neededAccel, maxAccelerationForce * decelerationCoefficient);
+                m_GoalVel = m_GoalVel.MoveTowards(Vector3.Zero, playerAcceleration *decelerationCoefficient* Time.Delta);
+                m_GoalVel= Vector3.Lerp(m_GoalVel,Vector3.Zero,playerAcceleration *decelerationCoefficient* Time.Delta*0.2f);
+                neededAccel = (m_GoalVel - rig.Velocity) / Time.Delta;
+                neededAccel=Vector3.Clamp(neededAccel,Vector3.Zero,maxAccelerationForce * decelerationCoefficient);
+                //neededAccel = Vector3.ClampMagnitude(neededAccel, maxAccelerationForce * decelerationCoefficient);
             }
         }
         else
         {
             //calculate desired acceleration and clamp that to the max acceleration
-            neededAccel = (m_GoalVel - rig.linearVelocity) / Time.fixedDeltaTime;
-            neededAccel = Vector3.ClampMagnitude(neededAccel, maxAccel);
+            neededAccel = (m_GoalVel - rig.Velocity) / Time.Delta;
+            neededAccel = Vector3.Clamp(neededAccel, Vector3.Zero,maxAccel);
         }
 
         // [UPHILL MODIFIERS FOR PLAYER MOVEMENT]
         
         // Compute uphill direction (the direction up the slope surface)
-        Vector3 uphillDir = Vector3.ProjectOnPlane(Vector3.up, groundNormal);
-        if (uphillDir.sqrMagnitude > 0.0001f)
-            uphillDir.Normalize();
+        Vector3 uphillDir = Vector3.VectorPlaneProject(Vector3.Up, groundNormal);
+        if (uphillDir.LengthSquared > 0.0001f)
+            uphillDir=uphillDir.Normal;
         else
-            uphillDir = Vector3.zero;
+            uphillDir = Vector3.Zero;
 
-        float slopeAngle = Vector3.Angle(groundNormal, Vector3.up);
-
-
+        float slopeAngle = Vector3.GetAngle(groundNormal, Vector3.Up);
 
 
 
 
-        if (slopeAngle > resistStartAngle && uphillDir != Vector3.zero)
+
+
+        if (slopeAngle > resistStartAngle && uphillDir != Vector3.Zero)
         {
             // how much of the acceleration points uphill
-            Vector3 uphillAccel = Vector3.Project(neededAccel, uphillDir);
-            float uphillDot = Vector3.Dot(uphillAccel.normalized, uphillDir);
+           // Vector3 uphillAccel = Vector3.Project(neededAccel, uphillDir);
+            Vector3 uphillAccel=neededAccel.Length*uphillDir;
+            float uphillDot = Vector3.Dot(uphillAccel.Normal, uphillDir);
 
-            if (uphillAccel.magnitude > 0f && uphillDot > 0f)
+            if (uphillAccel.Length > 0f && uphillDot > 0f)
             {
                 // Compute how steep the slope is (0–1)
-                float steepnessRatio = Mathf.InverseLerp(resistStartAngle, resistFullAngle, slopeAngle);
+
+                float steepnessRatio = MathX.LerpInverse(resistStartAngle, resistFullAngle, slopeAngle);
 
                 // Reduce uphill acceleration only
-                uphillResistance = Mathf.Lerp(1f, 0f, steepnessRatio);
+                uphillResistance = MathX.Lerp(1f, 0f, steepnessRatio);
 
 
                 Vector3 reducedUphill = uphillAccel * uphillResistance;
@@ -418,12 +448,13 @@ public sealed class FloatingBiped : MovementProvider
 
                 neededAccel = otherAccel + reducedUphill;
                 // Ensure total accel doesn't exceed allowed cap
-                neededAccel = Vector3.ClampMagnitude(neededAccel, maxAccel);
+                neededAccel = Vector3.Clamp(neededAccel,Vector3.Zero, maxAccel);
             }
         }
         // --- Apply force ---
-        Vector3 forceScale = new Vector3(1, 0, 1);
-        rig.AddForce(Vector3.Scale(neededAccel * rig.mass, forceScale));
+        Vector3 forceScale = new Vector3(1, 1, 0);
+
+        rig.ApplyForce(neededAccel * rig.Mass* forceScale);
     }
 	
 	protected override void OnUpdate()
@@ -436,7 +467,10 @@ public sealed class FloatingBiped : MovementProvider
 	{
 		ManageSpring();
 		ManageFriction();
+        ManageMovement();
 
+        LookAtVector(Vector3.One);
+        Move(Vector2.One);
 	}
 
 	//unsure but maybe? check with Unity
