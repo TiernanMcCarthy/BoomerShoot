@@ -396,7 +396,7 @@ public sealed class FloatingBiped : MovementProvider
                 m_GoalVel = m_GoalVel.MoveTowards(Vector3.Zero, playerAcceleration *decelerationCoefficient* Time.Delta);
                 m_GoalVel= Vector3.Lerp(m_GoalVel,Vector3.Zero,playerAcceleration *decelerationCoefficient* Time.Delta*0.2f);
                 neededAccel = (m_GoalVel - rig.Velocity) / Time.Delta;
-                neededAccel=Vector3.Clamp(neededAccel,Vector3.Zero,maxAccelerationForce * decelerationCoefficient);
+                neededAccel = neededAccel.ClampLength(maxAccelerationForce * decelerationCoefficient);
                 //neededAccel = Vector3.ClampMagnitude(neededAccel, maxAccelerationForce * decelerationCoefficient);
             }
         }
@@ -404,7 +404,7 @@ public sealed class FloatingBiped : MovementProvider
         {
             //calculate desired acceleration and clamp that to the max acceleration
             neededAccel = (m_GoalVel - rig.Velocity) / Time.Delta;
-            neededAccel = Vector3.Clamp(neededAccel, Vector3.Zero,maxAccel);
+            neededAccel = neededAccel.ClampLength(maxAccel);
         }
 
         // [UPHILL MODIFIERS FOR PLAYER MOVEMENT]
@@ -448,7 +448,7 @@ public sealed class FloatingBiped : MovementProvider
 
                 neededAccel = otherAccel + reducedUphill;
                 // Ensure total accel doesn't exceed allowed cap
-                neededAccel = Vector3.Clamp(neededAccel,Vector3.Zero, maxAccel);
+                neededAccel = neededAccel.ClampLength(maxAccel);
             }
         }
         // --- Apply force ---
@@ -468,18 +468,12 @@ public sealed class FloatingBiped : MovementProvider
 		ManageSpring();
 		ManageFriction();
         ManageMovement();
-
-        LookAtVector(Vector3.One);
-        Move(Vector2.One);
 	}
 
 	//unsure but maybe? check with Unity
 	public override void LookAtVector(Vector3 lookDir)
     {
-        Vector3 rotation= new Vector3(WorldRotation.Pitch(),WorldRotation.Yaw(),WorldRotation.Roll());
-
-        rotation.y = lookDir.y;
-        WorldRotation = Rotation.From(rotation.EulerAngles);
+        WorldRotation = Rotation.FromYaw(lookDir.y);
     }
 
     public override void Move(Vector2 moveInput)
@@ -489,6 +483,9 @@ public sealed class FloatingBiped : MovementProvider
         Vector3 moveDirection = (WorldTransform.Forward * playerInputs.y + WorldTransform.Right * playerInputs.x).Normal;
 
         desiredDir = moveDirection;
+
+
+
     }
 
     public override void Jump(bool jumpPress)
