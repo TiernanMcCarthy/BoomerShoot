@@ -132,7 +132,6 @@ public sealed class FloatingBiped : MovementProvider
 		{
 		Log.Info("We have our rig");
 		}
-		
 
 	}
 
@@ -456,6 +455,14 @@ public sealed class FloatingBiped : MovementProvider
 
         rig.ApplyForce(neededAccel * rig.Mass* forceScale);
     }
+
+    void ManageGroundHugForce()
+    {
+        if (!isGrounded && !isJumping && Time.Now-lastGroundedTime<0.2f)
+        {
+            rig.ApplyImpulse(Vector3.Down*groundHugForce);
+        }
+    }
 	
 	protected override void OnUpdate()
 	{
@@ -465,6 +472,7 @@ public sealed class FloatingBiped : MovementProvider
 
 	protected override void OnFixedUpdate()
 	{
+        ManageGroundHugForce();
 		ManageSpring();
 		ManageFriction();
         ManageMovement();

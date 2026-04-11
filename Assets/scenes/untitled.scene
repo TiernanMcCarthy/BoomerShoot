@@ -65,7 +65,7 @@
             "Roll": true
           },
           "MassCenterOverride": "0,0,0",
-          "MassOverride": 8193.531,
+          "MassOverride": 80,
           "MinImpactDamageSpeed": 500,
           "MotionEnabled": true,
           "OnComponentDestroy": null,
@@ -145,18 +145,18 @@
           },
           "airMovementInfluence": 0.2,
           "canJump": true,
-          "canStand": false,
+          "canStand": true,
           "coyoteTime": 0.2,
           "debugShow": 0,
           "decelerationCoefficient": 0.05,
           "frictionCoefficient": 0.96,
-          "groundHugForce": 13.972843,
-          "isGrounded": false,
+          "groundHugForce": 0,
+          "isGrounded": true,
           "jumpForce": 5,
           "jumpGroundNormalInfluence": 0.5,
           "jumpInterval": 0.3,
           "jumpLength": 0.2,
-          "maxAccelerationForce": 5905.51,
+          "maxAccelerationForce": 12000,
           "maxAccelerationFromDot": {
             "rangex": "-1,1",
             "rangey": "0.4,1",
@@ -192,14 +192,14 @@
             ]
           },
           "maxJumpTime": 0.3,
-          "maxSpeed": 196.85,
+          "maxSpeed": 450,
           "OnComponentDestroy": null,
           "OnComponentDisabled": null,
           "OnComponentEnabled": null,
           "OnComponentFixedUpdate": null,
           "OnComponentStart": null,
           "OnComponentUpdate": null,
-          "playerAcceleration": 1968.5,
+          "playerAcceleration": 2800,
           "playerAccelerationCurve": {
             "rangey": "0.35,0.95",
             "frames": [
@@ -223,10 +223,10 @@
             "_type": "gameobject",
             "go": "4619b07a-5e3c-4098-9824-9af3ec440030"
           },
-          "rideDampnerForce": 9009,
+          "rideDampnerForce": 90.09,
           "rideHeight": 41.3,
           "rideOffset": 0,
-          "rideSpringStrength": 90904.99,
+          "rideSpringStrength": 909.0499,
           "slopeGripFactor": {
             "rangex": "-0.00000005960464,4.207024",
             "rangey": "0.2603354,1",
@@ -7185,13 +7185,13 @@
       "CustomBounds": false
     },
     "GameObjectSystems": {
-      "Sandbox.Clutter.ClutterGridSystem": {
-        "Storage": {
-          "$blob": "46942400-3f31-4e4f-b066-789a646d3f55"
-        }
-      },
       "Sandbox.MovieMaker.MovieRecorderSystem": {
         "DisableClientRecording": false
+      },
+      "Sandbox.Clutter.ClutterGridSystem": {
+        "Storage": {
+          "$blob": "cb9b06ae-094f-4e0a-821d-697673a52e28"
+        }
       }
     }
   },
