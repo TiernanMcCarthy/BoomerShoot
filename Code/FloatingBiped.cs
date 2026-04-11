@@ -138,7 +138,7 @@ public sealed class FloatingBiped : MovementProvider
 	private HitInformation RaycastFromBody()
     {
 		var trace= Scene.PhysicsWorld.Trace.Ray(raycastPoint.WorldPosition,raycastPoint.WorldPosition+WorldTransform.Down*rideHeight).Run();
-        if (trace.Hit)
+        if (trace.Hit && trace.Body.GameObject!=GameObject)
         {
             return new HitInformation(true, trace.HitPosition, trace.Normal, trace.Distance, 
 			trace.Body.GameObject,trace.Body.GameObject.GetComponent<Rigidbody>());
@@ -307,7 +307,7 @@ public sealed class FloatingBiped : MovementProvider
 
                 if (hitObject != null) //Add opposite spring force to object to simulate standing on it
                 {
-                    hitObject.ApplyForceAt(rayDir * -springForce, hitInfo.hitLocation);
+                   // hitObject.ApplyForceAt(rayDir * -springForce, hitInfo.hitLocation);
                 }
             }
         }
@@ -463,6 +463,43 @@ public sealed class FloatingBiped : MovementProvider
             rig.ApplyImpulse(Vector3.Down*groundHugForce);
         }
     }
+
+    private void CalculateJumpForce()
+    {
+        if (isJumping)
+        {
+            rig.ApplyForce(jumpForce*(1-(Time.Now-jumpTime)/jumpLength)*jumpNormal);
+            
+        }
+    }
+
+
+    void ManageJump()
+    {
+        if(jumpPressed && !isJumping && canJump && Time.Now-jumpTime>jumpInterval)
+        {
+            if(isGrounded) //this is the start of a jump
+            {
+                isJumping=true;
+                jumpTime=Time.Now;
+
+                //initial jump should be the strongest
+                rig.ApplyForce(jumpForce*2*jumpNormal);
+            }
+        }
+        else if(isJumping && jumpPressed && Time.Now-jumpTime<jumpLength) //add a bit more force as the player holds jump
+        {
+            float slowDownFactor=1-MathX.Clamp(Time.Now-jumpTime,0.0001f,jumpLength)/jumpLength;
+
+            rig.ApplyForce(jumpForce*slowDownFactor*jumpNormal);
+        }
+        else
+        {
+            isJumping=false;
+        }
+    }
+
+
 	
 	protected override void OnUpdate()
 	{
@@ -470,8 +507,10 @@ public sealed class FloatingBiped : MovementProvider
 	}
 
 
+
 	protected override void OnFixedUpdate()
 	{
+        ManageJump();
         ManageGroundHugForce();
 		ManageSpring();
 		ManageFriction();

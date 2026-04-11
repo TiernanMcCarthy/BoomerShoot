@@ -71,6 +71,7 @@ public class PlayerInputProvider : InputProvider
         lookDir = new Vector3(lookDir.x, lookDir.y, 0);
 
        // jumpPressed = playerActions.FirstPerson.Jump.IsPressed();
+	   jumpPressed=Input.Down("Jump");
     }
 
 	//no equivalent of late update, lets try here
@@ -80,7 +81,7 @@ public class PlayerInputProvider : InputProvider
 		cameraReference.WorldRotation = camLocation.WorldRotation;
 		cameraReference.WorldPosition = camLocation.WorldPosition;
 	}
-	
+
     public override Vector2 GetMovementVector()
     {
         return inputVector;
