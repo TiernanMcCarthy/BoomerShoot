@@ -303,7 +303,7 @@ public sealed class FloatingBiped : MovementProvider
             //Float player
             if (!isJumping && !jumpPressed && (Time.Now - jumpTime > 0.1f))
             {
-                rig.ApplyImpulse(springForce*gripRatio*rayDir);
+                rig.ApplyForce(springForce*gripRatio*rayDir);
 
                 if (hitObject != null) //Add opposite spring force to object to simulate standing on it
                 {
@@ -426,7 +426,7 @@ public sealed class FloatingBiped : MovementProvider
         {
             // how much of the acceleration points uphill
            // Vector3 uphillAccel = Vector3.Project(neededAccel, uphillDir);
-            Vector3 uphillAccel=neededAccel.Length*uphillDir;
+            Vector3 uphillAccel = uphillDir * Vector3.Dot(neededAccel, uphillDir);
             float uphillDot = Vector3.Dot(uphillAccel.Normal, uphillDir);
 
             if (uphillAccel.Length > 0f && uphillDot > 0f)
@@ -483,6 +483,7 @@ public sealed class FloatingBiped : MovementProvider
                 isJumping=true;
                 jumpTime=Time.Now;
 
+                rig.Velocity=Vector3.Zero;
                 //initial jump should be the strongest
                 rig.ApplyForce(jumpForce*2*jumpNormal);
             }
