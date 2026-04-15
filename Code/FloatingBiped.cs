@@ -135,9 +135,10 @@ public sealed class FloatingBiped : MovementProvider
 
 	}
 
-	private HitInformation RaycastFromBody()
+	private HitInformation RaycastFromBody(float lengthMultiplier=1)
     {
-		var trace= Scene.PhysicsWorld.Trace.Ray(raycastPoint.WorldPosition,raycastPoint.WorldPosition+WorldTransform.Down*rideHeight).Run();
+        float raycastLength=rideHeight*lengthMultiplier;
+		var trace= Scene.PhysicsWorld.Trace.Ray(raycastPoint.WorldPosition,raycastPoint.WorldPosition+WorldTransform.Down*raycastLength).WithoutTag("player").Run();
         if (trace.Hit && trace.Body.GameObject!=GameObject)
         {
             return new HitInformation(true, trace.HitPosition, trace.Normal, trace.Distance, 
@@ -451,14 +452,15 @@ public sealed class FloatingBiped : MovementProvider
             }
         }
         // --- Apply force ---
-        Vector3 forceScale = new Vector3(1, 1, 0);
+        Vector3 forceScale = isGrounded ? new Vector3(1, 1, 1) : new Vector3(1, 1, 0);
 
-        rig.ApplyForce(neededAccel * rig.Mass* forceScale);
+        rig.ApplyForce(neededAccel * rig.Mass * forceScale);
     }
 
     void ManageGroundHugForce()
     {
-        if (!isGrounded && !isJumping && Time.Now-lastGroundedTime<0.2f)
+        HitInformation temp=RaycastFromBody(1.9f);
+        if (!isGrounded && !isJumping && Time.Now-lastGroundedTime<0.2f && temp.hit)
         {
             rig.ApplyImpulse(Vector3.Down*groundHugForce);
         }
