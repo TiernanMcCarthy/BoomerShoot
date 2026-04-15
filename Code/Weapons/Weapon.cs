@@ -7,15 +7,26 @@ public enum HeldState
     Held
 }
 
-public interface WeaponEvents : ISceneEvent<WeaponEvents>
+public interface IFirable
 {
+	
+	void PrimaryFire();
 
-	public void OnGrab(WeaponHandler grabber);
+	void OnZoom();
 
-	public void OnDrop(WeaponHandler dropper);	
 }
 
-public class Weapon : Component, WeaponEvents, iInteractable
+public interface IAmmoSystem
+{
+	
+	bool CanFire();
+
+	bool IsEmpty();
+
+	string GetAmmoStatus();
+}
+
+public class Weapon : Component, iInteractable
 {
 
 	[Header("Weapon States & Events")]
@@ -23,47 +34,60 @@ public class Weapon : Component, WeaponEvents, iInteractable
 	[Property] protected WeaponHandler owner {get; set;}
 
 	[Property] public HeldState weaponStatus;
-	
 
+	[Header("Cosmetic Elements")]
+	[Property] private GameObject worldSpaceModel {get; set;}
+	[Property] private GameObject playerHeldModel;
 	
+	private Rigidbody rig;
+
+
+	protected override void OnStart()
+	{
+		rig=GetComponent<Rigidbody>();
+	}
+
 	protected override void OnUpdate()
 	{
 
 	}
 
-	public virtual bool IsEmpty()
-    {
-        return false;
-    }
+	private void EnableHeldBehaviour()
+	{
+		rig.Enabled=false;
 
-	public virtual void Fire()
-    {
-        
-    }
+		//toggle cosmetic models
+		worldSpaceModel.Enabled=false;
+		playerHeldModel.Enabled=true;
+
+
+	}
+
+	private void EnableRigidbodyBehaviour()
+	{
+		rig.Enabled=true;
+
+		//toggle cosmetic models
+		worldSpaceModel.Enabled=true;
+		playerHeldModel.Enabled=false;
+	}
 
 	public virtual void Equip(WeaponHandler equipper)
     {
         owner = equipper;
         weaponStatus = HeldState.Grounded;
-        OnGrab(equipper);
+		EnableHeldBehaviour();
+		owner.WeaponPickup(this);
+
     }
 
 	public virtual void Unequip()
     {
         weaponStatus = HeldState.Grounded;
-        OnDrop(owner);
 		owner = null;
+		EnableRigidbodyBehaviour();
+
     }
-
-	public void OnGrab( WeaponHandler grabber )
-	{
-		throw new System.NotImplementedException();
-	}
-
-	public void OnDrop( WeaponHandler dropper )
-	{
-		throw new System.NotImplementedException();
-	}
 
 	public void Interact(WeaponHandler interactor)
 	{

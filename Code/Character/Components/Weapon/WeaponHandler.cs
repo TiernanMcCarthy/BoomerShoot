@@ -17,11 +17,32 @@ public class WeaponHandler : Component
 	[Header("Weapon Settings")]
 	[Property] private List<Weapon> equippedWeapons {get; set;}
 
+	[Property]private IFirable weaponSystem;
+
+	[Property]private IAmmoSystem ammoSystem;
+
+	private int currentWeaponSlot=0;
+
 	
 	[Header("Pickup settings")]
 	[Property] private float pickupRadius {get;set;} = 150;
 	[Property] private GameObject weaponHoldLocation {get;set;}
 
+
+
+	protected override void OnStart()
+	{
+		while(equippedWeapons.Count<2)
+		{
+			equippedWeapons.Add(new Weapon());
+		}
+	}
+
+	public void WeaponPickup(Weapon weapon)
+	{
+		weaponSystem=weapon.GetComponent<IFirable>();
+		ammoSystem=weapon.GetComponent<IAmmoSystem>();
+	}
 
 
 	private void WeaponScan()
@@ -61,8 +82,23 @@ public class WeaponHandler : Component
 
 	}
 
+	private void HandleWeapon()
+	{
+		if(Input.Down("Attack1"))
+		{
+			if(weaponSystem!=null && ammoSystem!=null)
+			{
+				if(ammoSystem.CanFire())
+				{
+					weaponSystem.PrimaryFire();
+				}
+			}
+		}
+	}
+
 	protected override void OnUpdate()
 	{
 		WeaponScan();
+		HandleWeapon();
 	}
 }
