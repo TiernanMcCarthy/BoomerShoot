@@ -22,6 +22,8 @@ public class WeaponHandler : Component
 
 	[Property]private IAmmoSystem ammoSystem;
 
+	[Property] private float weaponSwaySpeed=5;
+
 	private int currentWeaponSlot=0;
 
 	
@@ -31,10 +33,12 @@ public class WeaponHandler : Component
 
 	[Property] private GameObject playerCamera;
 
+	[Property] private BaseCharacter playerCharacter;
+
 	private float weaponZangle;
 
 
-
+	Vector3 lastCameraRot;
 
 	protected override void OnStart()
 	{
@@ -42,6 +46,11 @@ public class WeaponHandler : Component
 		{
 			equippedWeapons.Add(new Weapon());
 		}
+
+		initialPosition = weaponHoldLocation.LocalPosition;
+        initialRotation = weaponHoldLocation.LocalRotation;
+
+	
 	}
 
 	public void ProvideWeaponZRotation(float rot)
@@ -57,6 +66,7 @@ public class WeaponHandler : Component
 		weapon.GameObject.SetParent(weaponHoldLocation);
 		weapon.LocalPosition= new Vector3(0,0,0);
 		weapon.LocalRotation= new Rotation();
+
 	}
 
 
@@ -111,13 +121,55 @@ public class WeaponHandler : Component
 		}
 	}
 
+	[Header("Position Sway")]
+    [Property] public float amount {get; set;}= 0.02f;
+    [Property] public float maxAmount = 0.06f;
+    [Property] public float smoothAmount = 6f;
+
+    [Header("Rotation Sway")]
+    [Property] public float rotationAmount {get; set;}= 4f;
+    [Property] public float maxRotationAmount = 5f;
+    [Property] public float smoothRotation = 12f;
+
+    [Header("Look Tilt (Roll)")]
+    [Property] public float tiltAmount {get; set;}= 2f;
+
+    private Vector3 initialPosition;
+    private Rotation initialRotation;
+
+	Vector3 lastForward;
 	protected override void OnUpdate()
 	{
 		WeaponScan();
 		HandleWeapon();
 
-		Vector3 forward=weaponHoldLocation.LocalRotation.Forward;
-		forward.z=weaponZangle;
-		weaponHoldLocation.LocalRotation= Rotation.FromPitch(playerCamera.LocalRotation.Angles().pitch*0.2f);
+        // s&box Mouse.Delta.x is horizontal, y is vertical
+        float moveX = -Mouse.Delta.x * amount;
+        float moveY = -Mouse.Delta.y * amount;
+        
+        // 2. Clamp Position Sway
+        moveX = moveX.Clamp(-maxAmount, maxAmount);
+        moveY = moveY.Clamp(-maxAmount, maxAmount);
+
+        // s&box Space: Y is Horizontal, Z is Vertical.
+        Vector3 targetOffset = new Vector3(0, moveX, moveY);
+
+        // 3. Calculate Rotation Sway (Pitch, Yaw, Roll)
+        float tiltX = Mouse.Delta.y * rotationAmount;    // Pitch
+        float tiltY = -Mouse.Delta.x * rotationAmount;   // Yaw
+        float tiltZ = -Mouse.Delta.x * tiltAmount;      // Roll
+
+        // Clamp Rotation values
+        tiltX = tiltX.Clamp(-maxRotationAmount, maxRotationAmount);
+        tiltY = tiltY.Clamp(-maxRotationAmount, maxRotationAmount);
+
+        Rotation targetRotation = Rotation.From(new Angles(tiltX, tiltY, tiltZ));
+
+        // 4. Apply Smoothing
+        // We add the offset to the initialPosition so it stays in the right spot
+        weaponHoldLocation.LocalPosition = Vector3.Lerp(weaponHoldLocation.LocalPosition, initialPosition + targetOffset, Time.Delta * smoothAmount);
+        weaponHoldLocation.LocalRotation = Rotation.Slerp(weaponHoldLocation.LocalRotation, initialRotation * targetRotation, Time.Delta * smoothRotation);
+    
+
 	}
 }

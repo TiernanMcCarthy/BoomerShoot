@@ -83,6 +83,8 @@ public sealed class FloatingBiped : MovementProvider
 	[Property] float rideOffset {get; set;} =0;
     [Property] private float rideHeight;
     [Property] private float rideSpringStrength;
+
+    [Property] float maxSpringForce = 5000f;
     [Property] private float rideDampnerForce;
 	[Property] private Curve slopeGripFactor;
 
@@ -200,10 +202,10 @@ public sealed class FloatingBiped : MovementProvider
     }
 
 
-    float resistStartAngle;
-    float resistFullAngle;
-
-    float uphillResistance=1;
+    // Smoothly apply resistance between these angles                
+    float resistStartAngle = 20f; // begin resisting                 
+    float resistFullAngle  = 30; // completely block uphill motion  
+    float uphillResistance = 2f;  // scaling factor    
 	/// <summary>
 	/// Player is held up by a spring from the ground, strength will define how
 	/// well they can step over objects e.t.c
@@ -220,7 +222,7 @@ public sealed class FloatingBiped : MovementProvider
         //Lets think about different Gravity Directions later :)
         Vector3 downDir = Vector3.Down;
 
-        canStand = GetGroundAngleRelativeToGravity() < 40;
+        canStand = GetGroundAngleRelativeToGravity() < 30;
 
 		debugShow=GetGroundAngleRelativeToGravity();
         gripRatio = slopeGripFactor.Evaluate(GetGroundAngleRelativeToGravity());
@@ -300,9 +302,13 @@ public sealed class FloatingBiped : MovementProvider
 
             float x = hitInfo.hitDistance -rideHeight;
 
+            x=Math.Max(x, -rideHeight * 0.2f);
+
             float springForce = (x*rideSpringStrength) - (relVel*rideDampnerForce);
 
-            //Float player
+             // Adjust based on your player's mass
+            springForce = Math.Clamp(springForce, -maxSpringForce, maxSpringForce); 
+
             if (!isJumping && !jumpPressed && (Time.Now - jumpTime > 0.1f))
             {
                 rig.ApplyForce(springForce*gripRatio*rayDir);
@@ -452,9 +458,11 @@ public sealed class FloatingBiped : MovementProvider
                 neededAccel = neededAccel.ClampLength(maxAccel);
             }
         }
-        // --- Apply force ---
-        Vector3 forceScale = isGrounded ? new Vector3(1, 1, 1) : new Vector3(1, 1, 0);
+            // s&box is Z-up. To match Unity's (1, 0, 1), we use (1, 1, 0)
+        Vector3 forceScale = isGrounded ? new Vector3(1, 1, 0) : new Vector3(1, 1, 0);
 
+        // Applying the force while ignoring the vertical (Z) component 
+        // allows your uphill math to work on the horizontal plane only
         rig.ApplyForce(neededAccel * rig.Mass * forceScale);
     }
 
