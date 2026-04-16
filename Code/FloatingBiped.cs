@@ -138,7 +138,8 @@ public sealed class FloatingBiped : MovementProvider
 	private HitInformation RaycastFromBody(float lengthMultiplier=1)
     {
         float raycastLength=rideHeight*lengthMultiplier;
-		var trace= Scene.PhysicsWorld.Trace.Ray(raycastPoint.WorldPosition,raycastPoint.WorldPosition+WorldTransform.Down*raycastLength).WithoutTag("player").Run();
+        Vector3 ride=Vector3.Down*rideOffset;
+		var trace= Scene.PhysicsWorld.Trace.Ray(raycastPoint.WorldPosition+ride,raycastPoint.WorldPosition+rideOffset+WorldTransform.Down*raycastLength).WithoutTag("player").Run();
         if (trace.Hit && trace.Body.GameObject!=GameObject)
         {
             return new HitInformation(true, trace.HitPosition, trace.Normal, trace.Distance, 
@@ -550,7 +551,7 @@ public sealed class FloatingBiped : MovementProvider
 
 	protected override void DrawGizmos()
 	{
-		Gizmo.Draw.Line(raycastPoint.LocalPosition,raycastPoint.LocalPosition+Vector3.Up*-rideHeight);
-		Gizmo.Draw.SolidBox(BBox.FromPositionAndSize(raycastPoint.LocalPosition+Vector3.Up*-rideHeight,2));
+		Gizmo.Draw.Line(raycastPoint.LocalPosition,raycastPoint.LocalPosition+Vector3.Down*rideOffset+Vector3.Up*-rideHeight);
+		Gizmo.Draw.SolidBox(BBox.FromPositionAndSize(raycastPoint.LocalPosition+Vector3.Down*rideOffset+Vector3.Up*-rideHeight,2));
 	}
 }

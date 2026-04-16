@@ -12,6 +12,8 @@ public interface IFirable
 	
 	void PrimaryFire();
 
+	bool CanFire();
+
 	void OnZoom();
 
 }

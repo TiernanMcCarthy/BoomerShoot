@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using Sandbox;
 using Sandbox.Physics;
 
@@ -28,6 +29,11 @@ public class WeaponHandler : Component
 	[Property] private float pickupRadius {get;set;} = 150;
 	[Property] private GameObject weaponHoldLocation {get;set;}
 
+	[Property] private GameObject playerCamera;
+
+	private float weaponZangle;
+
+
 
 
 	protected override void OnStart()
@@ -38,10 +44,19 @@ public class WeaponHandler : Component
 		}
 	}
 
+	public void ProvideWeaponZRotation(float rot)
+	{
+		weaponZangle=rot;
+	}
+
 	public void WeaponPickup(Weapon weapon)
 	{
 		weaponSystem=weapon.GetComponent<IFirable>();
 		ammoSystem=weapon.GetComponent<IAmmoSystem>();
+
+		weapon.GameObject.SetParent(weaponHoldLocation);
+		weapon.LocalPosition= new Vector3(0,0,0);
+		weapon.LocalRotation= new Rotation();
 	}
 
 
@@ -88,7 +103,7 @@ public class WeaponHandler : Component
 		{
 			if(weaponSystem!=null && ammoSystem!=null)
 			{
-				if(ammoSystem.CanFire())
+				if(ammoSystem.CanFire() && weaponSystem.CanFire())
 				{
 					weaponSystem.PrimaryFire();
 				}
@@ -100,5 +115,9 @@ public class WeaponHandler : Component
 	{
 		WeaponScan();
 		HandleWeapon();
+
+		Vector3 forward=weaponHoldLocation.LocalRotation.Forward;
+		forward.z=weaponZangle;
+		weaponHoldLocation.LocalRotation= Rotation.FromPitch(playerCamera.LocalRotation.Angles().pitch*0.2f);
 	}
 }

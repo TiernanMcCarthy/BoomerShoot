@@ -1,0 +1,426 @@
+{
+  "RootObject": {
+    "__guid": "54aa7fca-4924-4d0f-a651-d178738dbc56",
+    "__version": 2,
+    "Flags": 0,
+    "Name": "player",
+    "Position": "0,0,0",
+    "Rotation": "0,-0,-0.6605235,-0.7508054",
+    "Scale": "0.14,0.14,2",
+    "Tags": "player",
+    "Enabled": true,
+    "NetworkMode": 2,
+    "NetworkFlags": 0,
+    "NetworkOrphaned": 0,
+    "NetworkTransmit": true,
+    "OwnerTransfer": 1,
+    "Components": [
+      {
+        "__type": "Sandbox.ModelRenderer",
+        "__guid": "2e9c0481-fdb8-425c-80e5-db371db8ad7d",
+        "__enabled": true,
+        "Flags": 0,
+        "BodyGroups": 18446744073709551615,
+        "CreateAttachments": false,
+        "LodOverride": null,
+        "MaterialGroup": null,
+        "MaterialOverride": null,
+        "Materials": null,
+        "Model": "models/dev/box.vmdl",
+        "OnComponentDestroy": null,
+        "OnComponentDisabled": null,
+        "OnComponentEnabled": null,
+        "OnComponentFixedUpdate": null,
+        "OnComponentStart": null,
+        "OnComponentUpdate": null,
+        "RenderOptions": {
+          "GameLayer": true,
+          "OverlayLayer": false,
+          "BloomLayer": false,
+          "AfterUILayer": false
+        },
+        "RenderType": "On",
+        "Tint": "0,0.43256,0.20907,1"
+      },
+      {
+        "__type": "Sandbox.Rigidbody",
+        "__guid": "c83b64b3-437a-4699-aa7f-6d6e6c3df9d9",
+        "__enabled": true,
+        "Flags": 0,
+        "AngularDamping": 0.05,
+        "EnableImpactDamage": true,
+        "EnhancedCcd": false,
+        "Gravity": true,
+        "GravityScale": 1,
+        "ImpactDamage": 0,
+        "LinearDamping": 0,
+        "Locking": {
+          "X": false,
+          "Y": false,
+          "Z": false,
+          "Pitch": true,
+          "Yaw": true,
+          "Roll": true
+        },
+        "MassCenterOverride": "0,0,0",
+        "MassOverride": 80,
+        "MinImpactDamageSpeed": 500,
+        "MotionEnabled": true,
+        "OnComponentDestroy": null,
+        "OnComponentDisabled": null,
+        "OnComponentEnabled": null,
+        "OnComponentFixedUpdate": null,
+        "OnComponentStart": null,
+        "OnComponentUpdate": null,
+        "OverrideMassCenter": false,
+        "RigidbodyFlags": 0,
+        "StartAsleep": false
+      },
+      {
+        "__type": "Sandbox.BoxCollider",
+        "__guid": "d7de7a77-2439-4b13-94c8-f1d1e316cc04",
+        "__enabled": true,
+        "Flags": 0,
+        "Center": "0,0,0",
+        "ColliderFlags": "IgnoreTraces",
+        "Elasticity": null,
+        "Friction": null,
+        "IsTrigger": false,
+        "OnComponentDestroy": null,
+        "OnComponentDisabled": null,
+        "OnComponentEnabled": null,
+        "OnComponentFixedUpdate": null,
+        "OnComponentStart": null,
+        "OnComponentUpdate": null,
+        "OnObjectTriggerEnter": null,
+        "OnObjectTriggerExit": null,
+        "OnTriggerEnter": null,
+        "OnTriggerExit": null,
+        "RollingResistance": null,
+        "Scale": "50,50,50",
+        "Static": false,
+        "Surface": "surfaces/player.surface",
+        "SurfaceVelocity": "0,0,0"
+      },
+      {
+        "__type": "FloatingBiped",
+        "__guid": "2e40863b-2c4f-4474-bf22-92cd82b0353a",
+        "__enabled": true,
+        "Flags": 0,
+        "accelerationFromDot": {
+          "rangex": "-1,1",
+          "rangey": "0.4999999,1",
+          "frames": [
+            {
+              "x": 0,
+              "y": 1,
+              "in": 0,
+              "out": 0,
+              "mode": "Mirrored"
+            },
+            {
+              "x": 0.6643522,
+              "y": 0.3168908,
+              "in": 1.2434775,
+              "out": -1.2434775,
+              "mode": "Mirrored"
+            },
+            {
+              "x": 0.7685319,
+              "y": 0.15008639,
+              "in": 1.8153203,
+              "out": -1.8153203,
+              "mode": "Mirrored"
+            },
+            {
+              "x": 1,
+              "y": 0,
+              "in": 0,
+              "out": 0,
+              "mode": "Mirrored"
+            }
+          ]
+        },
+        "airMovementInfluence": 0.2,
+        "canJump": true,
+        "canStand": true,
+        "coyoteTime": 0.2,
+        "debugShow": 0,
+        "decelerationCoefficient": 0.05,
+        "frictionCoefficient": 0.96,
+        "groundHugForce": 3000,
+        "isGrounded": true,
+        "jumpForce": 391508.62,
+        "jumpGroundNormalInfluence": 0.5,
+        "jumpInterval": 0.3,
+        "jumpLength": 0.2,
+        "maxAccelerationForce": 12000,
+        "maxAccelerationFromDot": {
+          "rangex": "-1,1",
+          "rangey": "0.4,1",
+          "frames": [
+            {
+              "x": 0,
+              "y": 1,
+              "in": 0,
+              "out": 0,
+              "mode": "Mirrored"
+            },
+            {
+              "x": 0.6643522,
+              "y": 0.3168908,
+              "in": 1.2434775,
+              "out": -1.2434775,
+              "mode": "Mirrored"
+            },
+            {
+              "x": 0.7685319,
+              "y": 0.15008639,
+              "in": 1.8153203,
+              "out": -1.8153203,
+              "mode": "Mirrored"
+            },
+            {
+              "x": 1,
+              "y": 0,
+              "in": 0,
+              "out": 0,
+              "mode": "Mirrored"
+            }
+          ]
+        },
+        "maxJumpTime": 0.3,
+        "maxSpeed": 450,
+        "OnComponentDestroy": null,
+        "OnComponentDisabled": null,
+        "OnComponentEnabled": null,
+        "OnComponentFixedUpdate": null,
+        "OnComponentStart": null,
+        "OnComponentUpdate": null,
+        "playerAcceleration": 2800,
+        "playerAccelerationCurve": {
+          "rangey": "0.35,0.95",
+          "frames": [
+            {
+              "x": 0,
+              "y": 0,
+              "in": 0,
+              "out": 0,
+              "mode": "Mirrored"
+            },
+            {
+              "x": 1,
+              "y": 1,
+              "in": 0,
+              "out": 0,
+              "mode": "Mirrored"
+            }
+          ]
+        },
+        "raycastPoint": {
+          "_type": "gameobject",
+          "go": "56a9f919-a0fa-4710-9036-bb1e003666ef"
+        },
+        "rideDampnerForce": 2533.8667,
+        "rideHeight": 129.8058,
+        "rideOffset": 0,
+        "rideSpringStrength": 51937.1,
+        "slopeGripFactor": {
+          "rangex": "-0.00000005960464,4.207024",
+          "rangey": "0.2603354,1",
+          "frames": [
+            {
+              "x": 0,
+              "y": 1,
+              "in": 0,
+              "out": 0,
+              "mode": "Mirrored"
+            },
+            {
+              "x": 1,
+              "y": 0,
+              "in": -1.7484555E-07,
+              "out": 1.7484555E-07,
+              "mode": "Mirrored"
+            }
+          ]
+        },
+        "terminalJumpVelocity": 652.5
+      },
+      {
+        "__type": "PlayerInputProvider",
+        "__guid": "37eb19f9-a031-4e7a-9c77-80d4583b8139",
+        "__enabled": true,
+        "Flags": 0,
+        "cameraReference": {
+          "_type": "gameobject",
+          "go": "d0e09908-bf5a-4413-ac8a-6b80115c8da5"
+        },
+        "camLocation": {
+          "_type": "gameobject",
+          "go": "fed0549b-7100-4444-8ba5-e105250cb085"
+        },
+        "mouseSensX": 0.03,
+        "mouseSensY": 0.03,
+        "OnComponentDestroy": null,
+        "OnComponentDisabled": null,
+        "OnComponentEnabled": null,
+        "OnComponentFixedUpdate": null,
+        "OnComponentStart": null,
+        "OnComponentUpdate": null
+      },
+      {
+        "__type": "WeaponHandler",
+        "__guid": "97666650-3577-4f8e-af39-eba75330ea60",
+        "__enabled": true,
+        "Flags": 0,
+        "ammoSystem": null,
+        "equippedWeapons": [
+          null,
+          null
+        ],
+        "OnComponentDestroy": null,
+        "OnComponentDisabled": null,
+        "OnComponentEnabled": null,
+        "OnComponentFixedUpdate": null,
+        "OnComponentStart": null,
+        "OnComponentUpdate": null,
+        "pickupRadius": 137.795,
+        "playerCamera": {
+          "_type": "gameobject",
+          "go": "fed0549b-7100-4444-8ba5-e105250cb085"
+        },
+        "weaponHoldLocation": {
+          "_type": "gameobject",
+          "go": "67662c78-f5dd-411e-8e43-f3c11079284b"
+        },
+        "weaponSystem": null
+      },
+      {
+        "__type": "BaseCharacter",
+        "__guid": "2918dadb-5129-42fc-8f4d-9c566abcb382",
+        "__enabled": true,
+        "Flags": 0,
+        "OnComponentDestroy": null,
+        "OnComponentDisabled": null,
+        "OnComponentEnabled": null,
+        "OnComponentFixedUpdate": null,
+        "OnComponentStart": null,
+        "OnComponentUpdate": null
+      }
+    ],
+    "Children": [
+      {
+        "__guid": "56a9f919-a0fa-4710-9036-bb1e003666ef",
+        "__version": 2,
+        "Flags": 0,
+        "Name": "RaycastPoint",
+        "Position": "0,0,22.074",
+        "Rotation": "0,0,0,1",
+        "Scale": "1,1,1",
+        "Tags": "",
+        "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkFlags": 0,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
+        "Components": [],
+        "Children": []
+      },
+      {
+        "__guid": "fed0549b-7100-4444-8ba5-e105250cb085",
+        "__version": 2,
+        "Flags": 0,
+        "Name": "Camera Location",
+        "Position": "23.88354,0,23.10063",
+        "Rotation": "0,0.2158429,0,0.9764281",
+        "Scale": "1,1,1",
+        "Tags": "",
+        "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkFlags": 0,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
+        "Components": [],
+        "Children": [
+          {
+            "__guid": "d0e09908-bf5a-4413-ac8a-6b80115c8da5",
+            "__version": 2,
+            "Flags": 0,
+            "Name": "Main Camera",
+            "Position": "0,0,0",
+            "Rotation": "0,0,0,1",
+            "Scale": "1,1,1",
+            "Tags": "",
+            "Enabled": true,
+            "NetworkMode": 2,
+            "NetworkFlags": 0,
+            "NetworkOrphaned": 0,
+            "NetworkTransmit": true,
+            "OwnerTransfer": 1,
+            "Components": [
+              {
+                "__type": "Sandbox.CameraComponent",
+                "__guid": "3898fdbf-27ad-43a1-a1fe-6d951199e127",
+                "__enabled": true,
+                "Flags": 0,
+                "BackgroundColor": "0.33333,0.46275,0.52157,1",
+                "ClearFlags": "All",
+                "EnablePostProcessing": true,
+                "FieldOfView": 90,
+                "FovAxis": "Horizontal",
+                "IsMainCamera": true,
+                "OnComponentDestroy": null,
+                "OnComponentDisabled": null,
+                "OnComponentEnabled": null,
+                "OnComponentFixedUpdate": null,
+                "OnComponentStart": null,
+                "OnComponentUpdate": null,
+                "Orthographic": false,
+                "OrthographicHeight": 1204,
+                "PostProcessAnchor": null,
+                "Priority": 1,
+                "RenderExcludeTags": "",
+                "RenderTags": "",
+                "RenderTexture": null,
+                "TargetEye": "None",
+                "Viewport": "0,0,1,1",
+                "ZFar": 10000,
+                "ZNear": 0.1
+              }
+            ],
+            "Children": [
+              {
+                "__guid": "67662c78-f5dd-411e-8e43-f3c11079284b",
+                "__version": 2,
+                "Flags": 0,
+                "Name": "Weapon WorldSpace Point",
+                "Position": "75.04943,-40.07359,1.316606",
+                "Rotation": "0,0.04349727,0,0.9990535",
+                "Scale": "1,1,1",
+                "Tags": "",
+                "Enabled": true,
+                "NetworkMode": 2,
+                "NetworkFlags": 0,
+                "NetworkOrphaned": 0,
+                "NetworkTransmit": true,
+                "OwnerTransfer": 1,
+                "Components": [],
+                "Children": []
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "ResourceVersion": 2,
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "DontBreakAsTemplate": false,
+  "__references": [],
+  "__version": 2
+}

@@ -17,6 +17,8 @@ public class BaseCharacter : Component ,IPlayerEvent
     
     public InputProvider inputProvider { get; private set; }
 
+	private WeaponHandler weaponHandler;
+
 	//No clue how to use or implement yet :)
 	public void OnDeath( BaseCharacter player )
 	{
@@ -27,6 +29,7 @@ public class BaseCharacter : Component ,IPlayerEvent
 	{
 		movementProvider=GetComponent<MovementProvider>();
         inputProvider=GetComponent<InputProvider>();
+		weaponHandler=GetComponent<WeaponHandler>();
 	}
 
 	protected override void OnUpdate()
