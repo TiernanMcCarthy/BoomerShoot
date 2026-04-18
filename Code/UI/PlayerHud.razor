@@ -1,0 +1,36 @@
+@using Sandbox;
+@using Sandbox.UI;
+@inherits PanelComponent
+@namespace Sandbox
+
+<root>
+	<div class ="Ammo">
+		<p>🔫 @player.GetWeaponAmmo()</p>
+		<p>❤️ @player.GetHealth()</p>
+	</div>
+
+	<div class ="HealthBarTests">
+		<div class ="Shieldbar">
+			<div class ="InnerShield">
+				<div class ="ShieldFill" style="width : @(player.GetShieldStrength()/player.GetMaxHealth()*100f)%"> </div>
+
+			</div>
+
+		</div>
+
+		
+
+	</div>
+
+</root>
+
+@code
+{
+
+	[Property] BaseCharacter player {get; set;}
+
+	protected override int BuildHash() 
+	{
+		return System.HashCode.Combine(player.GetWeaponAmmo(),player.GetShieldStrength().ToString());
+	}
+}

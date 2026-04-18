@@ -18,6 +18,8 @@ public class WeaponHandler : Component
 	[Header("Weapon Settings")]
 	[Property] private List<Weapon> equippedWeapons {get; set;}
 
+
+	Weapon currentWeapon;
 	[Property]private IFirable weaponSystem;
 
 	[Property]private IAmmoSystem ammoSystem;
@@ -35,10 +37,23 @@ public class WeaponHandler : Component
 
 	[Property] private BaseCharacter playerCharacter;
 
-	private float weaponZangle;
+	[Header("Position Sway")]
+    [Property] public float amount {get; set;}= 0.02f;
+    [Property] public float maxAmount = 0.06f;
+    [Property] public float smoothAmount = 6f;
+
+    [Header("Rotation Sway")]
+    [Property] public float rotationAmount {get; set;}= 4f;
+    [Property] public float maxRotationAmount = 5f;
+    [Property] public float smoothRotation = 12f;
+
+    [Header("Look Tilt (Roll)")]
+    [Property] public float tiltAmount {get; set;}= 2f;
+
+    private Vector3 initialPosition;
+    private Rotation initialRotation;
 
 
-	Vector3 lastCameraRot;
 
 	protected override void OnStart()
 	{
@@ -53,15 +68,12 @@ public class WeaponHandler : Component
 	
 	}
 
-	public void ProvideWeaponZRotation(float rot)
-	{
-		weaponZangle=rot;
-	}
 
 	public void WeaponPickup(Weapon weapon)
 	{
 		weaponSystem=weapon.GetComponent<IFirable>();
 		ammoSystem=weapon.GetComponent<IAmmoSystem>();
+		currentWeapon=weapon;
 
 		weapon.GameObject.SetParent(weaponHoldLocation);
 		weapon.LocalPosition= new Vector3(0,0,0);
@@ -97,7 +109,6 @@ public class WeaponHandler : Component
 
 		if(closestObject!=null)
 		{
-			Log.Info(closestObject);
 			
 			if(Input.Released("Use"))
 			{
@@ -121,21 +132,17 @@ public class WeaponHandler : Component
 		}
 	}
 
-	[Header("Position Sway")]
-    [Property] public float amount {get; set;}= 0.02f;
-    [Property] public float maxAmount = 0.06f;
-    [Property] public float smoothAmount = 6f;
+	public string GetWeaponAmmo()
+	{
+		if(ammoSystem!=null)
+		{
+			return ammoSystem.GetAmmoStatus();
+		}
 
-    [Header("Rotation Sway")]
-    [Property] public float rotationAmount {get; set;}= 4f;
-    [Property] public float maxRotationAmount = 5f;
-    [Property] public float smoothRotation = 12f;
+		return "";
+	}
 
-    [Header("Look Tilt (Roll)")]
-    [Property] public float tiltAmount {get; set;}= 2f;
 
-    private Vector3 initialPosition;
-    private Rotation initialRotation;
 
 	Vector3 lastForward;
 	protected override void OnUpdate()

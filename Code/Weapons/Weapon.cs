@@ -20,12 +20,15 @@ public interface IFirable
 
 public interface IAmmoSystem
 {
-	
+	int GetProjectileCount();
+
 	bool CanFire();
 
 	bool IsEmpty();
 
-	string GetAmmoStatus();
+	void Deplete();
+
+	public string GetAmmoStatus();
 }
 
 public class Weapon : Component, iInteractable
@@ -40,6 +43,8 @@ public class Weapon : Component, iInteractable
 	[Header("Cosmetic Elements")]
 	[Property] private GameObject worldSpaceModel {get; set;}
 	[Property] private GameObject playerHeldModel;
+
+	[Property] public GameObject firePosition {get; private set;}
 	
 	private Rigidbody rig;
 

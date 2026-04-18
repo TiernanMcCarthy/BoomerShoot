@@ -17,6 +17,8 @@ public class BaseCharacter : Component ,IPlayerEvent
     
     public InputProvider inputProvider { get; private set; }
 
+	public HealthComponent healthComponent;
+
 	private WeaponHandler weaponHandler;
 
 	//No clue how to use or implement yet :)
@@ -30,6 +32,7 @@ public class BaseCharacter : Component ,IPlayerEvent
 		movementProvider=GetComponent<MovementProvider>();
         inputProvider=GetComponent<InputProvider>();
 		weaponHandler=GetComponent<WeaponHandler>();
+		healthComponent=GetComponent<HealthComponent>();
 	}
 
 	protected override void OnUpdate()
@@ -38,5 +41,29 @@ public class BaseCharacter : Component ,IPlayerEvent
         movementProvider.LookAtVector(inputProvider.GetLookVector());
         movementProvider.Move(inputProvider.GetMovementVector());
         movementProvider.Jump(inputProvider.GetJumpState());
+	}
+
+	public string GetWeaponAmmo()
+	{
+		if(weaponHandler!=null)
+		{
+			return weaponHandler.GetWeaponAmmo();
+		}
+		return "";
+	}
+
+	public string GetHealth()
+	{
+		return healthComponent.GetHealthString();
+	}
+
+	public float GetMaxHealth()
+	{
+		return healthComponent.maxHealth;
+	}
+
+	public float GetShieldStrength()
+	{
+		return healthComponent.GetHealth();
 	}
 }

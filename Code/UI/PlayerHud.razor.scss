@@ -1,0 +1,51 @@
+PlayerHud
+{
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	font-family: 'Poppins';
+	font-size: 34px;
+	>.Ammo
+	{
+		position:absolute;
+		top: 32px;
+		right : 120px;
+		font-size: 50px;
+		font-weight: bold;
+		width: 200px; 
+   		text-align: right;
+		text-stroke: 2px rgb(42, 126, 215,487) ;
+		color: rgba(0, 255, 255, 0.487);
+		flex-direction: column;
+	}
+
+	>.HealthBarTests
+	{
+		position: absolute;
+		top: 80px;
+		left: 960;
+
+		transform: translate(-50%, -50%);
+
+
+		>.ShieldBar
+		{
+			width: 580px;
+			height: 60px;
+			background-color:rgba(0, 255, 255, 0.101);
+			padding: 8px;
+			> .InnerShield
+			{
+				background-color:rgba(0, 255, 255, 0.645);
+				flex-grow: 1;
+				> .ShieldFill
+				{
+					height:100%;
+					background-color:rgba(0, 255, 255, 0.645);
+				}
+			}
+		}
+	}
+}
