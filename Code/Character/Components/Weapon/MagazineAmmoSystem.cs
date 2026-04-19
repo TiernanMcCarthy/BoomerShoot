@@ -4,19 +4,76 @@ public sealed class MagazineAmmoSystem : Component, IAmmoSystem
 {
 
 	[Header("Ammo Settings")]
+
+	[Property] public string weaponAmmoType {get; set;} = "REASSIGN";
+
 	[Property] private int magazineSize {get; set;} = 10;
 
 	[Property] private int maxAmmo {get; set;} =6;
 
 	[Property] public int reserveAmmo	{get;private set;}
 
-	int currentMagCount;
+	[Property] int currentMagCount;
 
 	[Property] private float reloadSpeed;
 
 	bool isReloading=false;
 
 	private float reloadTime;
+
+
+	public string GetAmmoType()
+	{
+		return weaponAmmoType;
+	}
+
+	public int GetTotalAmmo()
+	{
+		int total=reserveAmmo+currentMagCount;
+
+		return total;
+	}
+
+	public int TryConsumeRounds(int rounds)
+	{
+		if(rounds<reserveAmmo) //if the reserve is enough
+		{
+			reserveAmmo-=rounds;
+			return rounds;
+		}
+
+		if(rounds<reserveAmmo + currentMagCount) //if the reserve + current mag is enough
+		{
+			currentMagCount=currentMagCount-(rounds-reserveAmmo);
+			reserveAmmo=0;
+			return rounds;
+		}
+
+		
+		//deplete the whole gun
+		GameObject.Destroy();
+		int returnTarget=reserveAmmo+currentMagCount;
+		currentMagCount=0;
+		reserveAmmo=0;
+		return returnTarget;
+	}
+
+	public bool ResupplyWeapon(Weapon targetWeapon)
+	{
+		//deplete ammo from weapon
+		if(targetWeapon.GetWeaponAmmoType()==weaponAmmoType)
+		{
+		    IAmmoSystem targetAmmo=targetWeapon.GetComponent<IAmmoSystem>();
+
+			reserveAmmo+=targetAmmo.TryConsumeRounds(maxAmmo-(reserveAmmo));
+
+			//if(total.)
+			
+		}
+		
+		//Destroy Weapon
+		return false;
+	}
 
 	public bool CanFire()
 	{
@@ -40,7 +97,7 @@ public sealed class MagazineAmmoSystem : Component, IAmmoSystem
 
 	public bool IsEmpty()
 	{
-		return false;
+		return currentMagCount>0 && reserveAmmo>0;
 		//throw new System.NotImplementedException();
 	}
 

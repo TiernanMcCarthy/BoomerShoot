@@ -64,8 +64,6 @@ public class WeaponHandler : Component
 
 		initialPosition = weaponHoldLocation.LocalPosition;
         initialRotation = weaponHoldLocation.LocalRotation;
-
-	
 	}
 
 
@@ -101,6 +99,20 @@ public class WeaponHandler : Component
 				}
 				if(target!=null)
 				{
+
+					//weapon Ammo Code
+
+					Weapon castAsWeapon=target.GetComponent<Weapon>();
+
+					if(castAsWeapon!=null && currentWeapon!=null)
+					{
+						if(castAsWeapon.GetWeaponAmmoType()==currentWeapon.GetWeaponAmmoType())
+						{
+							currentWeapon.ResupplyWeapon(castAsWeapon);
+							break;
+						}
+
+					}
 					closestObject=target;
 					closestDist=trace[i].Distance;
 				}
@@ -109,7 +121,6 @@ public class WeaponHandler : Component
 
 		if(closestObject!=null)
 		{
-			
 			if(Input.Released("Use"))
 			{
 				closestObject.GetComponent<iInteractable>().Interact(this); 

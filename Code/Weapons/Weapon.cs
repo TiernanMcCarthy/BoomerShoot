@@ -22,6 +22,12 @@ public interface IAmmoSystem
 {
 	int GetProjectileCount();
 
+	public bool ResupplyWeapon(Weapon targetWeapon);
+
+	public int GetTotalAmmo();
+
+	public int TryConsumeRounds(int rounds);
+
 	bool CanFire();
 
 	bool TryReload();
@@ -35,10 +41,15 @@ public interface IAmmoSystem
 	void Deplete();
 
 	public string GetAmmoStatus();
+
+	public string GetAmmoType();
+
+
 }
 
 public class Weapon : Component, iInteractable
 {
+
 
 	[Header("Weapon States & Events")]
 	//Agent/Player that is holding this object
@@ -54,10 +65,13 @@ public class Weapon : Component, iInteractable
 	
 	private Rigidbody rig;
 
+	private IAmmoSystem ammoSystem;
+
 
 	protected override void OnStart()
 	{
 		rig=GetComponent<Rigidbody>();
+		ammoSystem=GetComponent<IAmmoSystem>();
 	}
 
 	protected override void OnUpdate()
@@ -101,6 +115,18 @@ public class Weapon : Component, iInteractable
 		EnableRigidbodyBehaviour();
 
     }
+
+	public virtual bool ResupplyWeapon(Weapon target)
+	{
+		return ammoSystem.ResupplyWeapon(target);
+	}
+
+	public virtual string GetWeaponAmmoType()
+	{
+		return ammoSystem.GetAmmoType();
+	}
+
+	
 
 	public void Interact(WeaponHandler interactor)
 	{
