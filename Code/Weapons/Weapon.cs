@@ -24,6 +24,12 @@ public interface IAmmoSystem
 
 	bool CanFire();
 
+	bool TryReload();
+
+	void CancelReload();
+
+	void ReloadWeapon();
+
 	bool IsEmpty();
 
 	void Deplete();

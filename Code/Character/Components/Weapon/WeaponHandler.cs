@@ -120,6 +120,14 @@ public class WeaponHandler : Component
 
 	private void HandleWeapon()
 	{
+
+		if(Input.Down("Reload"))
+		{
+			if(ammoSystem!=null)
+			{
+				ammoSystem.TryReload();
+			}
+		}
 		if(Input.Down("Attack1"))
 		{
 			if(weaponSystem!=null && ammoSystem!=null)
@@ -130,6 +138,8 @@ public class WeaponHandler : Component
 				}
 			}
 		}
+
+
 	}
 
 	public string GetWeaponAmmo()

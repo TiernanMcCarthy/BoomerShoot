@@ -11,10 +11,10 @@ PlayerHud
 	{
 		position:absolute;
 		top: 32px;
-		right : 120px;
+		right : -50px;
 		font-size: 50px;
 		font-weight: bold;
-		width: 200px; 
+		width: 450px; 
    		text-align: right;
 		text-stroke: 2px rgb(42, 126, 215,487) ;
 		color: rgba(0, 255, 255, 0.487);
@@ -34,16 +34,20 @@ PlayerHud
 		{
 			width: 580px;
 			height: 60px;
-			background-color:rgba(0, 255, 255, 0.101);
-			padding: 8px;
+			background-color:rgba(0, 23, 23, 0.401);
+			padding: 2px;
+			
 			> .InnerShield
 			{
-				background-color:rgba(0, 255, 255, 0.645);
-				flex-grow: 1;
+				background-color:rgba(0, 255, 255, 0.501);
+				flex-grow:1;
+				justify-content: center; 
+    			align-items: center;
 				> .ShieldFill
 				{
 					height:100%;
-					background-color:rgba(0, 255, 255, 0.645);
+					background-color:rgba(0, 255, 255, 0.745);
+
 				}
 			}
 		}

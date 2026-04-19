@@ -82,15 +82,16 @@
           "__guid": "feb135be-abdb-4e6f-aaca-88236d7d449d",
           "__enabled": true,
           "Flags": 0,
-          "magazineSize": 600,
-          "maxMagazines": 6,
+          "magazineSize": 60,
+          "maxAmmo": 600,
           "OnComponentDestroy": null,
           "OnComponentDisabled": null,
           "OnComponentEnabled": null,
           "OnComponentFixedUpdate": null,
           "OnComponentStart": null,
           "OnComponentUpdate": null,
-          "reloadSpeed": 0
+          "reloadSpeed": 0,
+          "reserveAmmo": 600
         },
         {
           "__type": "ProjectileFirer",
@@ -7725,14 +7726,18 @@
               "__guid": "ab2bc65d-2281-4694-a9c6-3114ceaf7038",
               "__enabled": true,
               "Flags": 0,
+              "currentShieldStrength": 0,
               "health": 100,
               "maxHealth": 100,
+              "maxShieldStrength": 0,
               "OnComponentDestroy": null,
               "OnComponentDisabled": null,
               "OnComponentEnabled": null,
               "OnComponentFixedUpdate": null,
               "OnComponentStart": null,
-              "OnComponentUpdate": null
+              "OnComponentUpdate": null,
+              "shieldRechargeInterval": 4,
+              "shieldRechargeSpeed": 0
             }
           }
         ],
