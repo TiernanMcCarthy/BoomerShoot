@@ -61,16 +61,12 @@ public sealed class MagazineAmmoSystem : Component, IAmmoSystem
 	public bool ResupplyWeapon(Weapon targetWeapon)
 	{
 		//deplete ammo from weapon
-		if(targetWeapon.GetWeaponAmmoType()==weaponAmmoType)
-		{
-		    IAmmoSystem targetAmmo=targetWeapon.GetComponent<IAmmoSystem>();
+		IAmmoSystem targetAmmo=targetWeapon.GetComponent<IAmmoSystem>();
 
-			reserveAmmo+=targetAmmo.TryConsumeRounds(maxAmmo-(reserveAmmo));
+		reserveAmmo+=targetAmmo.TryConsumeRounds(maxAmmo-(reserveAmmo));
 
-			//if(total.)
-			
-		}
-		
+		//if(total.)
+
 		//Destroy Weapon
 		return false;
 	}

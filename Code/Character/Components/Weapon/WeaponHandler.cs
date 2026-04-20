@@ -7,6 +7,18 @@ using Sandbox.Physics;
 public interface iInteractable
 {
 	public void Interact(WeaponHandler interactor);
+
+	//Name of the item, e.g. Assault Rifle, button, e.t.c
+	string GetItemString()
+	{
+		return "Undefined_Type";
+	}
+
+	// Action e.g. "Pickup", "Activate"
+	string GetActionString()
+	{
+		return "Undefined Action";
+	}
 }
 
 /// <summary>
@@ -53,17 +65,34 @@ public class WeaponHandler : Component
     private Vector3 initialPosition;
     private Rotation initialRotation;
 
+	private string weaponStringReadout ="";
 
 
 	protected override void OnStart()
 	{
-		while(equippedWeapons.Count<2)
-		{
-			equippedWeapons.Add(new Weapon());
-		}
-
+		equippedWeapons= new List<Weapon>();
 		initialPosition = weaponHoldLocation.LocalPosition;
         initialRotation = weaponHoldLocation.LocalRotation;
+	}
+
+
+	public List<string> GetWeaponStrings()
+	{
+		List<string> weaponList= new List<string>();
+
+		for(int i=0; i<equippedWeapons.Count;i++)
+		{
+			if(equippedWeapons[i]!=null)
+			{
+				weaponList.Add(equippedWeapons[i].WeaponName);
+			}
+		}
+		return weaponList;
+	}
+
+	public string InteractableStringReadout()
+	{
+		return weaponStringReadout;
 	}
 
 
@@ -71,12 +100,48 @@ public class WeaponHandler : Component
 	{
 		weaponSystem=weapon.GetComponent<IFirable>();
 		ammoSystem=weapon.GetComponent<IAmmoSystem>();
+
+		bool dropCurrentWeapon=false;
+
+		if(equippedWeapons.Count<2)
+		{
+			equippedWeapons.Add(weapon);
+			currentWeaponSlot=equippedWeapons.Count-1;
+		}
+		else
+		{
+			equippedWeapons[currentWeaponSlot]=weapon;
+			dropCurrentWeapon=true;
+		}
+
+		if(currentWeapon!=null)
+		{
+
+			if(dropCurrentWeapon)
+			{
+				currentWeapon.Unequip();
+			}
+			else
+			{
+				currentWeapon.GameObject.Enabled=false;
+			}
+		}
+		
 		currentWeapon=weapon;
 
 		weapon.GameObject.SetParent(weaponHoldLocation);
 		weapon.LocalPosition= new Vector3(0,0,0);
 		weapon.LocalRotation= new Rotation();
+	}
 
+	private void DropCurrentWeapon()
+	{
+		if(currentWeapon!=null)
+		{
+			currentWeapon.Unequip();
+			currentWeapon=null;
+
+		}
 	}
 
 
@@ -87,32 +152,61 @@ public class WeaponHandler : Component
 		GameObject closestObject=null;
 		float closestDist=999999;
 
+		weaponStringReadout="";
+
+		iInteractable interactable=null;
+
 		for(int i=0; i<trace.Length; i++)
 		{
 			if(trace[i].Distance<closestDist)
 			{
 
 				GameObject target=null;
-				if(trace[i].Body.GameObject.GetComponent<iInteractable>()!=null)
+				interactable=trace[i].Body.GameObject.GetComponent<iInteractable>();
+				if(interactable!=null)
 				{
 					target=trace[i].Body.GameObject;
 				}
 				if(target!=null)
 				{
-
-					//weapon Ammo Code
-
-					Weapon castAsWeapon=target.GetComponent<Weapon>();
-
-					if(castAsWeapon!=null && currentWeapon!=null)
+					if(equippedWeapons.Count>0)
 					{
-						if(castAsWeapon.GetWeaponAmmoType()==currentWeapon.GetWeaponAmmoType())
+						string targetString=interactable.GetItemString();
+
+						bool canReloadAGun=false;
+
+						Weapon castAsWeapon=null;
+
+						Weapon reloadWeapon=null;
+
+						foreach(Weapon weapon in equippedWeapons)
 						{
-							currentWeapon.ResupplyWeapon(castAsWeapon);
-							break;
+							if(weapon!=null)
+							{
+
+								if(targetString==weapon.GetItemString())
+								{
+									castAsWeapon=target.GetComponent<Weapon>();
+									canReloadAGun=true;
+									reloadWeapon=weapon;
+									break;
+								}
+							}
 						}
 
+						//weapon Ammo Code
+
+						
+
+						if(canReloadAGun)
+						{
+
+							reloadWeapon.ResupplyWeapon(castAsWeapon);
+							break;
+						}
 					}
+
+
 					closestObject=target;
 					closestDist=trace[i].Distance;
 				}
@@ -121,9 +215,12 @@ public class WeaponHandler : Component
 
 		if(closestObject!=null)
 		{
+			weaponStringReadout=string.Format("Press E to {0} {1}", interactable.GetActionString(),interactable.GetItemString());
+
+
 			if(Input.Released("Use"))
 			{
-				closestObject.GetComponent<iInteractable>().Interact(this); 
+				interactable.Interact(this); 
 			}
 		}
 
@@ -163,13 +260,63 @@ public class WeaponHandler : Component
 		return "";
 	}
 
+	private void DisableWeapons()
+	{
+		for(int wep=0; wep<equippedWeapons.Count; wep++)
+		{
+			Weapon weapon= equippedWeapons[wep];
 
+			if(weapon!=null)
+			{
+				weapon.GameObject.Enabled=false;
+			}
+		}
+	}
+
+
+	private void EnableWeapon(int i)
+	{
+		Weapon weapon= equippedWeapons[i];
+
+		weapon.GameObject.Enabled=true;
+	}
+
+	private void ManageWeaponInventory()
+	{
+		if(Input.Released("SwapWeapon"))
+		{
+			if(equippedWeapons.Count>1)
+			{
+				
+				equippedWeapons[currentWeaponSlot].GameObject.Enabled=false;
+
+				currentWeaponSlot++;
+
+				if(currentWeaponSlot>=equippedWeapons.Count)
+				{
+					currentWeaponSlot=0;
+				}
+
+				currentWeapon=equippedWeapons[currentWeaponSlot];
+
+				currentWeapon.GameObject.Enabled=true;
+
+				weaponSystem=currentWeapon.GetComponent<IFirable>();
+				ammoSystem=currentWeapon.GetComponent<IAmmoSystem>();
+
+			}
+			
+
+		}
+	}
 
 	Vector3 lastForward;
 	protected override void OnUpdate()
 	{
 		WeaponScan();
 		HandleWeapon();
+		ManageWeaponInventory();
+
 
         // s&box Mouse.Delta.x is horizontal, y is vertical
         float moveX = -Mouse.Delta.x * amount;

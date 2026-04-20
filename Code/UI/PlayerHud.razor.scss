@@ -21,6 +21,18 @@ PlayerHud
 		flex-direction: column;
 	}
 
+	>.Interaction
+	{
+		position:absolute;
+		top: 32px;
+		left : 50px;
+		font-size: 25px;
+		font-weight: bold;
+		text-stroke: 2px rgb(42, 126, 215,487) ;
+		color: rgba(0, 255, 255, 0.487);
+		width: 450px; 
+	}
+
 	>.HealthBarTests
 	{
 		position: absolute;

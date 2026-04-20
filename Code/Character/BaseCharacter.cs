@@ -66,4 +66,9 @@ public class BaseCharacter : Component ,IPlayerEvent
 	{
 		return healthComponent.GetHealth();
 	}
+
+	public string GetInteractionString()
+	{
+		return weaponHandler.InteractableStringReadout();
+	}
 }

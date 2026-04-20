@@ -16,6 +16,8 @@ public interface IFirable
 
 	void OnZoom();
 
+
+
 }
 
 public interface IAmmoSystem
@@ -52,6 +54,8 @@ public class Weapon : Component, iInteractable
 
 
 	[Header("Weapon States & Events")]
+
+ 	[Property] public string WeaponName {get; private set;}
 	//Agent/Player that is holding this object
 	[Property] protected WeaponHandler owner {get; set;}
 
@@ -65,13 +69,24 @@ public class Weapon : Component, iInteractable
 	
 	private Rigidbody rig;
 
-	private IAmmoSystem ammoSystem;
+	[Property]private IAmmoSystem ammoSystem;
 
 
 	protected override void OnStart()
 	{
 		rig=GetComponent<Rigidbody>();
 		ammoSystem=GetComponent<IAmmoSystem>();
+	}
+
+	
+	public string GetItemString()
+	{
+		return WeaponName;
+	}
+
+	public string GetActionString()
+	{
+		return "Pickup";
 	}
 
 	protected override void OnUpdate()
@@ -94,6 +109,8 @@ public class Weapon : Component, iInteractable
 	{
 		rig.Enabled=true;
 
+		GameObject.SetParent(null);
+
 		//toggle cosmetic models
 		worldSpaceModel.Enabled=true;
 		playerHeldModel.Enabled=false;
@@ -101,7 +118,18 @@ public class Weapon : Component, iInteractable
 
 	public virtual void Equip(WeaponHandler equipper)
     {
+		List<string> currentWeapons=equipper.GetWeaponStrings();
+
+		foreach(string s in currentWeapons)
+		{
+			if(s==WeaponName)
+			{
+				return;
+			}
+		}
+
         owner = equipper;
+
         weaponStatus = HeldState.Grounded;
 		EnableHeldBehaviour();
 		owner.WeaponPickup(this);
@@ -110,6 +138,7 @@ public class Weapon : Component, iInteractable
 
 	public virtual void Unequip()
     {
+		GameObject.Enabled=true;
         weaponStatus = HeldState.Grounded;
 		owner = null;
 		EnableRigidbodyBehaviour();
