@@ -103,12 +103,12 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""Vertical"",
-                    ""type"": ""Button"",
+                    ""type"": ""Value"",
                     ""id"": ""27620aed-8017-4eef-a164-460b5c0d8237"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": false
+                    ""initialStateCheck"": true
                 },
                 {
                     ""name"": ""Jump"",
@@ -118,6 +118,24 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""LookVertical"",
+                    ""type"": ""Value"",
+                    ""id"": ""2f0d44f9-4e63-416e-91ac-46024046d507"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""LookHorizontal"",
+                    ""type"": ""Value"",
+                    ""id"": ""141c4744-67bb-49cd-93db-930b3ee51237"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -155,6 +173,17 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
+                    ""name"": """",
+                    ""id"": ""6bb876ac-91ad-4d4c-a608-c4663f9acc8f"",
+                    ""path"": ""<Gamepad>/leftStick/x"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Horizontal"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
                     ""name"": ""1D Axis"",
                     ""id"": ""15c2ec81-52bd-47ae-94ba-f69efc071166"",
                     ""path"": ""1DAxis"",
@@ -189,12 +218,56 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""0a05c93f-aff5-490d-a40c-6590e2b3324b"",
+                    ""path"": ""<Gamepad>/leftStick/y"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Vertical"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""861336be-58bd-47e9-85eb-317c2276ec23"",
                     ""path"": ""<Keyboard>/space"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cc4ba995-e4d3-4856-932a-0710274573aa"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0f05302e-c0c6-4dcf-8a3b-f313f64d8be9"",
+                    ""path"": ""<Gamepad>/rightStick/y"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LookVertical"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f2d51106-2998-4bb4-b2dc-2a518825dbb7"",
+                    ""path"": ""<Gamepad>/rightStick/x"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LookHorizontal"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -208,6 +281,8 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
         m_FirstPerson_Horizontal = m_FirstPerson.FindAction("Horizontal", throwIfNotFound: true);
         m_FirstPerson_Vertical = m_FirstPerson.FindAction("Vertical", throwIfNotFound: true);
         m_FirstPerson_Jump = m_FirstPerson.FindAction("Jump", throwIfNotFound: true);
+        m_FirstPerson_LookVertical = m_FirstPerson.FindAction("LookVertical", throwIfNotFound: true);
+        m_FirstPerson_LookHorizontal = m_FirstPerson.FindAction("LookHorizontal", throwIfNotFound: true);
     }
 
     ~@PlayerActions()
@@ -291,6 +366,8 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_FirstPerson_Horizontal;
     private readonly InputAction m_FirstPerson_Vertical;
     private readonly InputAction m_FirstPerson_Jump;
+    private readonly InputAction m_FirstPerson_LookVertical;
+    private readonly InputAction m_FirstPerson_LookHorizontal;
     /// <summary>
     /// Provides access to input actions defined in input action map "FirstPerson".
     /// </summary>
@@ -314,6 +391,14 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "FirstPerson/Jump".
         /// </summary>
         public InputAction @Jump => m_Wrapper.m_FirstPerson_Jump;
+        /// <summary>
+        /// Provides access to the underlying input action "FirstPerson/LookVertical".
+        /// </summary>
+        public InputAction @LookVertical => m_Wrapper.m_FirstPerson_LookVertical;
+        /// <summary>
+        /// Provides access to the underlying input action "FirstPerson/LookHorizontal".
+        /// </summary>
+        public InputAction @LookHorizontal => m_Wrapper.m_FirstPerson_LookHorizontal;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -349,6 +434,12 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
             @Jump.started += instance.OnJump;
             @Jump.performed += instance.OnJump;
             @Jump.canceled += instance.OnJump;
+            @LookVertical.started += instance.OnLookVertical;
+            @LookVertical.performed += instance.OnLookVertical;
+            @LookVertical.canceled += instance.OnLookVertical;
+            @LookHorizontal.started += instance.OnLookHorizontal;
+            @LookHorizontal.performed += instance.OnLookHorizontal;
+            @LookHorizontal.canceled += instance.OnLookHorizontal;
         }
 
         /// <summary>
@@ -369,6 +460,12 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
             @Jump.started -= instance.OnJump;
             @Jump.performed -= instance.OnJump;
             @Jump.canceled -= instance.OnJump;
+            @LookVertical.started -= instance.OnLookVertical;
+            @LookVertical.performed -= instance.OnLookVertical;
+            @LookVertical.canceled -= instance.OnLookVertical;
+            @LookHorizontal.started -= instance.OnLookHorizontal;
+            @LookHorizontal.performed -= instance.OnLookHorizontal;
+            @LookHorizontal.canceled -= instance.OnLookHorizontal;
         }
 
         /// <summary>
@@ -430,5 +527,19 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnJump(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "LookVertical" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnLookVertical(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "LookHorizontal" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnLookHorizontal(InputAction.CallbackContext context);
     }
 }

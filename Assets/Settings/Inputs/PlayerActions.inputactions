@@ -17,12 +17,12 @@
                 },
                 {
                     "name": "Vertical",
-                    "type": "Button",
+                    "type": "Value",
                     "id": "27620aed-8017-4eef-a164-460b5c0d8237",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Jump",
@@ -32,6 +32,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "LookVertical",
+                    "type": "Value",
+                    "id": "2f0d44f9-4e63-416e-91ac-46024046d507",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "LookHorizontal",
+                    "type": "Value",
+                    "id": "141c4744-67bb-49cd-93db-930b3ee51237",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -69,6 +87,17 @@
                     "isPartOfComposite": true
                 },
                 {
+                    "name": "",
+                    "id": "6bb876ac-91ad-4d4c-a608-c4663f9acc8f",
+                    "path": "<Gamepad>/leftStick/x",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Horizontal",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
                     "name": "1D Axis",
                     "id": "15c2ec81-52bd-47ae-94ba-f69efc071166",
                     "path": "1DAxis",
@@ -103,12 +132,56 @@
                 },
                 {
                     "name": "",
+                    "id": "0a05c93f-aff5-490d-a40c-6590e2b3324b",
+                    "path": "<Gamepad>/leftStick/y",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Vertical",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "861336be-58bd-47e9-85eb-317c2276ec23",
                     "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "cc4ba995-e4d3-4856-932a-0710274573aa",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0f05302e-c0c6-4dcf-8a3b-f313f64d8be9",
+                    "path": "<Gamepad>/rightStick/y",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LookVertical",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f2d51106-2998-4bb4-b2dc-2a518825dbb7",
+                    "path": "<Gamepad>/rightStick/x",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LookHorizontal",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

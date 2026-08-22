@@ -19,6 +19,8 @@ class PlayerInputProvider : InputProvider
     [Header("Camera Settings")] 
     [SerializeField] private float mouseSensX = 5;
     [SerializeField] private float mouseSensY = 5;
+    [SerializeField] private float _controllerSensitivity = 5;
+    
     [SerializeField] private Transform camLocation;
     [SerializeField] private Transform cameraReference;
     
@@ -47,9 +49,15 @@ class PlayerInputProvider : InputProvider
 
         Vector2 mouseDelta = Mouse.current.delta.ReadValue();
 
-        // Scale these by sensitivity. (Usually delta doesn't need Time.deltaTime)
+        // Scale these by sensitivity.
         lookDir.y += mouseDelta.x * mouseSensX; 
-        lookDir.x -= mouseDelta.y * mouseSensY; // Inverted usually feels 'natural'
+        lookDir.x -= mouseDelta.y * mouseSensY; 
+        
+        if(Gamepad.current.IsActuated())
+        {
+            lookDir.y+= playerActions.FirstPerson.LookHorizontal.ReadValue<float>() *_controllerSensitivity;
+            lookDir.x -= playerActions.FirstPerson.LookVertical.ReadValue<float>() * _controllerSensitivity;    
+        }
 
         // Clamp pitch to prevent the camera flipping upside down
         lookDir.x = Mathf.Clamp(lookDir.x, -80f, 80f);

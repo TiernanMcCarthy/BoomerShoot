@@ -6,7 +6,9 @@ public enum HeldState
     Grounded,
     Held
 }
-public class Weapon : MonoBehaviour
+
+
+public class Weapon : MonoBehaviour 
 {
     protected WeaponHandler owner;
 
@@ -54,5 +56,10 @@ public class Weapon : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void Iwork()
+    {
+        Debug.Log("Iwork");
     }
 }

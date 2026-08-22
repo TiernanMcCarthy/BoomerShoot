@@ -1345,7 +1345,7 @@ MonoBehaviour:
   rideOffset: 0
   rideHeight: 1.15
   rideSpringStrength: 495
-  rideDampnerForce: 33.7
+  rideDampnerForce: 39.9
   slopeGripFactor:
     serializedVersion: 2
     m_Curve:
@@ -1550,6 +1550,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInputProvider
   mouseSensX: 0.15
   mouseSensY: 0.15
+  _controllerSensitivity: 2.7
   camLocation: {fileID: 1800824435}
   cameraReference: {fileID: 1097967148}
 --- !u!1 &410087039
@@ -4232,6 +4233,57 @@ Mesh:
       - serializedVersion: 1
         m_IndexStart: 0
         m_IndexCount: 0
+--- !u!1 &1482508849
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1482508851}
+  - component: {fileID: 1482508850}
+  m_Layer: 0
+  m_Name: Proj
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1482508850
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1482508849}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9fba9654b4625084880e0d867cff3a05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Projectile
+  testFace:
+    rid: -2
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
+--- !u!4 &1482508851
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1482508849}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 12.54645, y: -0, z: -2.3857}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1482695953
 GameObject:
   m_ObjectHideFlags: 0
@@ -12593,3 +12645,4 @@ SceneRoots:
   - {fileID: 6389705561347859159}
   - {fileID: 1905289036}
   - {fileID: 1377770429}
+  - {fileID: 1482508851}
