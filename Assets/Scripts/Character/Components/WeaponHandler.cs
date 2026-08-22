@@ -2,17 +2,11 @@ using UnityEngine;
 
 public class WeaponHandler : MonoBehaviour
 {
-    
-    
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+
+
+    public void TakeWeapon(Weapon weapon)
     {
-        
+
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

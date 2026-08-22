@@ -136,6 +136,15 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Interact"",
+                    ""type"": ""Button"",
+                    ""id"": ""771a83b2-8d0c-4847-bcb0-7e2d9d5e1710"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -270,6 +279,17 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
                     ""action"": ""LookHorizontal"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ee8bdca4-f33c-41c7-bb73-dc6e3fc6e45c"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -283,6 +303,7 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
         m_FirstPerson_Jump = m_FirstPerson.FindAction("Jump", throwIfNotFound: true);
         m_FirstPerson_LookVertical = m_FirstPerson.FindAction("LookVertical", throwIfNotFound: true);
         m_FirstPerson_LookHorizontal = m_FirstPerson.FindAction("LookHorizontal", throwIfNotFound: true);
+        m_FirstPerson_Interact = m_FirstPerson.FindAction("Interact", throwIfNotFound: true);
     }
 
     ~@PlayerActions()
@@ -368,6 +389,7 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_FirstPerson_Jump;
     private readonly InputAction m_FirstPerson_LookVertical;
     private readonly InputAction m_FirstPerson_LookHorizontal;
+    private readonly InputAction m_FirstPerson_Interact;
     /// <summary>
     /// Provides access to input actions defined in input action map "FirstPerson".
     /// </summary>
@@ -399,6 +421,10 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "FirstPerson/LookHorizontal".
         /// </summary>
         public InputAction @LookHorizontal => m_Wrapper.m_FirstPerson_LookHorizontal;
+        /// <summary>
+        /// Provides access to the underlying input action "FirstPerson/Interact".
+        /// </summary>
+        public InputAction @Interact => m_Wrapper.m_FirstPerson_Interact;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -440,6 +466,9 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
             @LookHorizontal.started += instance.OnLookHorizontal;
             @LookHorizontal.performed += instance.OnLookHorizontal;
             @LookHorizontal.canceled += instance.OnLookHorizontal;
+            @Interact.started += instance.OnInteract;
+            @Interact.performed += instance.OnInteract;
+            @Interact.canceled += instance.OnInteract;
         }
 
         /// <summary>
@@ -466,6 +495,9 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
             @LookHorizontal.started -= instance.OnLookHorizontal;
             @LookHorizontal.performed -= instance.OnLookHorizontal;
             @LookHorizontal.canceled -= instance.OnLookHorizontal;
+            @Interact.started -= instance.OnInteract;
+            @Interact.performed -= instance.OnInteract;
+            @Interact.canceled -= instance.OnInteract;
         }
 
         /// <summary>
@@ -541,5 +573,12 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnLookHorizontal(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Interact" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnInteract(InputAction.CallbackContext context);
     }
 }

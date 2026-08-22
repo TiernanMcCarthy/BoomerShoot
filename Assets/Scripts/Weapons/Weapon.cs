@@ -1,3 +1,5 @@
+using BoomerShoot.Character.Components;
+using BoomerShoot.Weapon.Interfaces;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -8,7 +10,7 @@ public enum HeldState
 }
 
 
-public class Weapon : MonoBehaviour 
+public class Weapon : MonoBehaviour , IUsableEntity, IFirable
 {
     protected WeaponHandler owner;
 
@@ -58,8 +60,28 @@ public class Weapon : MonoBehaviour
         
     }
 
-    public void Iwork()
+    public void Interact(InteractionHandler interactor)
     {
-        Debug.Log("Iwork");
+        throw new System.NotImplementedException();
+    }
+
+    public void PrimaryFire()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void SecondaryFire()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public bool CanFire()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void OnZoom()
+    {
+        throw new System.NotImplementedException();
     }
 }

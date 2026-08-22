@@ -1,6 +1,4 @@
-﻿
-
-using System;
+﻿using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -65,6 +63,11 @@ class PlayerInputProvider : InputProvider
         lookDir = new Vector3(lookDir.x, lookDir.y, 0);
 
         jumpPressed = playerActions.FirstPerson.Jump.IsPressed();
+    }
+
+    public override bool GetInteractionState()
+    {
+        return playerActions.FirstPerson.Interact.IsPressed();
     }
 
     private void LateUpdate()

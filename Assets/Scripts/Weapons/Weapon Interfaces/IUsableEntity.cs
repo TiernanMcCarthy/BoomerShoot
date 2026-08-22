@@ -1,15 +1,29 @@
+using BoomerShoot.Character.Components;
 using UnityEngine;
 
 
-namespace BoomerShoot.Weapon.Interfaces
+namespace BoomerShoot.WeaponObject.Interfaces
 {
+
+    public enum InteractableType
+    {
+        Weapon,
+        Equipment,
+        GenericInteractable
+    }
+
     public interface IUsableEntity
     {
         /// <summary>
         /// 
         /// </summary>
         /// <param name="interactor"></param>
-        public void Interact(WeaponHandler interactor);
+        public void Interact(InteractionHandler interactor);
+
+        public InteractableType GetInteractableType()
+        {
+            return InteractableType.Weapon;
+        }
 
         /// <summary>
         /// Name of the item, e.g. Assault Rifle, button, e.t.c
@@ -28,6 +42,8 @@ namespace BoomerShoot.Weapon.Interfaces
         {
             return "Undefined Action";
         }
+
+        
 
     }
 }

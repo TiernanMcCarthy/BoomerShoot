@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class InputProvider : MonoBehaviour
 {
+
+
     public virtual Vector2 GetMovementVector()
     {
         return Vector2.zero;
@@ -13,6 +15,11 @@ public class InputProvider : MonoBehaviour
     }
 
     public virtual bool GetJumpState()
+    {
+        return false;
+    }
+
+    public virtual bool GetInteractionState()
     {
         return false;
     }

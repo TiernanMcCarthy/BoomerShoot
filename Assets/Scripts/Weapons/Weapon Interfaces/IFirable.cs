@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace BoomerShoot.Weapon.Interfaces
+namespace BoomerShoot.WeaponObject.Interfaces
 {
     /// <summary>
     /// Any weapon type needs to implement this interface for the weapon handler to use this
