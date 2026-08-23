@@ -1,5 +1,5 @@
 using BoomerShoot.Character.Components;
-using BoomerShoot.Weapon.Interfaces;
+using BoomerShoot.WeaponObject.Interfaces;
 using UnityEngine;
 using UnityEngine.Events;
 

@@ -479,8 +479,8 @@ public class FloatingBiped : MovementProvider
             }
         }
         // --- Apply force ---
-        Vector3 forceScale = new Vector3(1, 0, 1);
-        rig.AddForce(Vector3.Scale(neededAccel * rig.mass, forceScale));
+        Vector3 currentForceScale = isGrounded ? Vector3.one : new Vector3(1, 0, 1);
+        rig.AddForce(Vector3.Scale(neededAccel * rig.mass, currentForceScale));
     }
 
     void ManageGroundHugForce()
@@ -489,6 +489,7 @@ public class FloatingBiped : MovementProvider
         {
             rig.AddForce(Vector3.down*groundHugForce, ForceMode.Impulse);
         }
+        
     }
 
     private Vector2 playerInputs;

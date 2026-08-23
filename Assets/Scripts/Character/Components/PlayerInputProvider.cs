@@ -51,7 +51,7 @@ class PlayerInputProvider : InputProvider
         lookDir.y += mouseDelta.x * mouseSensX; 
         lookDir.x -= mouseDelta.y * mouseSensY; 
         
-        if(Gamepad.current.IsActuated())
+        if(Gamepad.current!=null)
         {
             lookDir.y+= playerActions.FirstPerson.LookHorizontal.ReadValue<float>() *_controllerSensitivity;
             lookDir.x -= playerActions.FirstPerson.LookVertical.ReadValue<float>() * _controllerSensitivity;    

@@ -28,7 +28,7 @@ public class BaseCharacter : MonoBehaviour
         health=GetComponent<Health>();
         movementProvider=GetComponent<MovementProvider>();
         inputProvider=GetComponent<InputProvider>();
-
+        interactionHandler=GetComponent<InteractionHandler>();
     }
 
     private void HasDied()
@@ -42,13 +42,46 @@ public class BaseCharacter : MonoBehaviour
         
     }
 
-    // Update is called once per frame
-    void Update()
+    /// <summary>
+    /// All Character Movement Provider Functionality should take place here
+    /// </summary>
+    private void ManageMovement()
     {
-        inputProvider.PollInputs();
         movementProvider.LookAtVector(inputProvider.GetLookVector());
         movementProvider.Move(inputProvider.GetMovementVector());
         movementProvider.Jump(inputProvider.GetJumpState());
+    }
+
+
+    /// <summary>
+    /// Character Input should be provided at this stage by the relevant provider
+    /// </summary>
+    private void CollectInput()
+    {
+        inputProvider.PollInputs();
+    }
+
+    /// <summary>
+    /// Poll the interaction manager and see if we need to pick up a weapon (Ai would probably need to be aware of what they're doing here)
+    /// </summary>
+    private void ManageInteraction()
+    {
+        interactionHandler.ScanForItems(transform.position);
+        if (inputProvider.GetInteractionState())
+        {
+            interactionHandler.UseInteractable();
+        }
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+        CollectInput();
+        ManageInteraction();
+        ManageMovement();
+
+
         
     }
 }

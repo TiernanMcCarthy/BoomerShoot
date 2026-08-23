@@ -31,7 +31,7 @@ namespace BoomerShoot.Character.Components
         /// Public Method for telling this handler to scan, it will pass the results to the appropriate component
         /// </summary>
         /// <param name="scanPos"></param>
-        public void ScanForItems(Vector3 scanPos)
+        public virtual void ScanForItems(Vector3 scanPos)
         {
             InteractableScan(scanPos);
         }
@@ -56,7 +56,7 @@ namespace BoomerShoot.Character.Components
 
             for (int i = 0; i < results.Length; i++) //sort for the closest interactable and set this as the target
             {
-                float distance= Vector3.Distance(scanPos,results[i].ClosestPoint(scanPos));
+                float distance= Vector3.Distance(scanPos,results[i].transform.position);
 
                 if (distance < closestDist)
                 {
@@ -73,7 +73,7 @@ namespace BoomerShoot.Character.Components
 
             if (closestObject != null)
             {
-                _currentEntity = interactable;
+                _currentEntity = closestObject.GetComponent<IUsableEntity>();
                 _currentEntityGO = closestObject;
 
             }
@@ -92,6 +92,11 @@ namespace BoomerShoot.Character.Components
                 Weapon weapon = _currentEntityGO.GetComponent<Weapon>();
                 _weaponHandler.TakeWeapon(weapon);
             }
+            else if(_currentEntity.GetInteractableType()== InteractableType.GenericInteractable)
+            {
+                _currentEntity.Interact(this);
+            }
+
         }
 
 
