@@ -67,7 +67,7 @@ class PlayerInputProvider : InputProvider
 
     public override bool GetInteractionState()
     {
-        return playerActions.FirstPerson.Interact.IsPressed();
+        return playerActions.FirstPerson.Interact.WasPressedThisFrame();
     }
 
     private void LateUpdate()
