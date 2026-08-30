@@ -1,3 +1,4 @@
+using BoomerShoot.WeaponObject;
 using BoomerShoot.WeaponObject.Interfaces;
 using System.Diagnostics;
 using UnityEngine;
@@ -80,6 +81,10 @@ namespace BoomerShoot.Character.Components
 
         }
 
+        /// <summary>
+        /// Interaction function (called whenever a base character chooses to).
+        /// Can interact with any IUsableEntity, this includes generics (buttons) or weapons e.t.c
+        /// </summary>
         public void UseInteractable()
         {
             if(_currentEntity==null)

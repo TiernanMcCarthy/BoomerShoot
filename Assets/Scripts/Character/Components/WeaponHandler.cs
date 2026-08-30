@@ -1,12 +1,15 @@
+using BoomerShoot.WeaponObject;
 using UnityEngine;
-
-public class WeaponHandler : MonoBehaviour
+namespace BoomerShoot.Character.Components
 {
-
-
-    public void TakeWeapon(Weapon weapon)
+    public class WeaponHandler : MonoBehaviour
     {
-        Debug.Log(weapon.gameObject.name);
-    }
 
+
+        public void TakeWeapon(Weapon weapon)
+        {
+            Debug.Log(weapon.gameObject.name);
+        }
+
+    }
 }

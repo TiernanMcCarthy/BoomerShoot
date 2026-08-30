@@ -1337,7 +1337,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   canJump: 1
-  jumpGroundNormalInfluence: 0.5
+  jumpGroundNormalInfluence: 0.2
   coyoteTime: 0.2
   jumpInterval: 0.3
   maxJumpTime: 0.3
