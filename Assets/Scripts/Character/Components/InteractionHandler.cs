@@ -1,3 +1,4 @@
+using System;
 using BoomerShoot.WeaponObject;
 using BoomerShoot.WeaponObject.Interfaces;
 using System.Diagnostics;
@@ -26,7 +27,14 @@ namespace BoomerShoot.Character.Components
         private GameObject _currentEntityGO;
 
         private IUsableEntity _currentEntity;
+        
+        int layerIndex = LayerMask.NameToLayer("Interaction");
+        private int layerMask;
 
+        private void Start()
+        {
+            layerMask = 1 << layerIndex;
+        }
 
         /// <summary>
         /// Public Method for telling this handler to scan, it will pass the results to the appropriate component
@@ -48,7 +56,7 @@ namespace BoomerShoot.Character.Components
 
            _currentEntity = null;
            _currentEntityGO = null;
-           Collider[] results = Physics.OverlapSphere(scanPos, _sphericalScanRange);
+           Collider[] results = Physics.OverlapSphere(scanPos, _sphericalScanRange,layerMask);
 
             GameObject closestObject = null;
             float closestDist = 999999;

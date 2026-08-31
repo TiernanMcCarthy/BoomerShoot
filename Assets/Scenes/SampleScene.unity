@@ -2696,7 +2696,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 852653625}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Open Pos
   m_TagString: Untagged
   m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
@@ -5049,7 +5049,7 @@ GameObject:
   - component: {fileID: 1381556615}
   - component: {fileID: 1381556614}
   - component: {fileID: 1381556613}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Door Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5848,7 +5848,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1612274018}
   - component: {fileID: 1612274019}
-  m_Layer: 0
+  - component: {fileID: 1612274020}
+  m_Layer: 6
   m_Name: Simple Door
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5890,6 +5891,27 @@ MonoBehaviour:
   _doorSpeed: 5
   _doorVisual: {fileID: 1381556612}
   _isOpen: 0
+--- !u!65 &1612274020
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1612274017}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1694630176
 GameObject:
   m_ObjectHideFlags: 0
@@ -7409,7 +7431,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2133403237}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Close Pos
   m_TagString: Untagged
   m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}

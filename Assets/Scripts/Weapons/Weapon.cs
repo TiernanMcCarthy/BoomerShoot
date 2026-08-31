@@ -24,9 +24,12 @@ namespace BoomerShoot.WeaponObject
         public UnityEvent OnGrab;
 
         public UnityEvent OnRelease;
+        
+        public string WeaponName { get {return _weaponName;}}
 
 
-
+        [SerializeField] private string _weaponName = "_unknownWeaponString";
+        
         public virtual void InitWeapon()
         {
 

@@ -159,7 +159,7 @@ public class FloatingBiped : MovementProvider
         Vector3 downDir = Vector3.down;
 
          canStand = GetGroundAngleRelativeToGravity() < 40;
-
+         
          gripRatio = slopeGripFactor.Evaluate(GetGroundAngleRelativeToGravity());
          
         //Manage Coyote Time
@@ -313,11 +313,11 @@ public class FloatingBiped : MovementProvider
                     jumpTime = Time.time;
                     isJumping=true;
                     rig.linearVelocity = new Vector3(rig.linearVelocity.x, 0, rig.linearVelocity.z);
-                    rig.AddForce(jumpNormal * jumpForce*1.3f, ForceMode.VelocityChange);
+                    rig.AddForce(jumpForce*1.3f*jumpNormal, ForceMode.VelocityChange);
 
                     if (hitObject != null)
                     {
-                        hitObject.AddForce(-jumpNormal * jumpForce*1.3f, ForceMode.VelocityChange);
+                        hitObject.AddForce( jumpForce*1.3f*-jumpNormal, ForceMode.VelocityChange);
                     }
                 }
             }
